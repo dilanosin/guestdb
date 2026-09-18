@@ -117,6 +117,46 @@ footer { border-top: 1px solid var(--border); padding: 2rem 0; background: #fff;
 .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: #78716c; }
 .foot-credit { margin-top: 1rem; font-size: 0.75rem; color: #a8a29e; text-align: center; }
 
+  /* Modal */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(12,26,18,.72); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 1.5rem; }
+  .modal-overlay.open { display: flex; }
+  .modal { position: relative; background: var(--panel); border-radius: 18px; max-width: 900px; width: 100%; max-height: 88vh; overflow-y: auto; box-shadow: 0 30px 80px rgba(0,0,0,.4); animation: pop .25s ease; }
+  @keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
+  .modal-hero { position: relative; height: 300px; background: linear-gradient(135deg,#e7f5eb,#f0fdf4); }
+  .modal-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .modal-hero .spec-nophoto { font-size: 4rem; }
+  .modal-close { position: absolute; top: 12px; right: 12px; width: 38px; height: 38px; border-radius: 50%; border: none; background: rgba(12,26,18,.7); color: #fff; font-size: 1.15rem; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; }
+  .modal-close:hover { background: var(--leaf); }
+  .modal-body { padding: 1.75rem 2rem 2rem; }
+  .modal-title { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem; margin-bottom: .2rem; }
+  .modal-title h2 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.02em; }
+  .modal-sci { color: #16a34a; font-style: italic; font-size: .95rem; font-weight: 600; }
+  .modal-local { color: #78716c; font-style: italic; font-size: .9rem; }
+  .modal-badges { display: flex; flex-wrap: wrap; gap: .5rem; margin: .7rem 0 1.2rem; }
+  .modal-badges .spec-badge { margin-top: 0; }
+  .modal-badges .spec-iso { margin-top: 0; }
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem 1.5rem; background: #f7f6f2; border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem 1.5rem; margin: 1.25rem 0; }
+  .detail-cell { font-size: .86rem; color: #57534e; }
+  .detail-cell b { display: block; font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; color: #a8a29e; margin-bottom: .15rem; font-weight: 700; }
+  .modal-about h3, .modal-bite h3 { font-size: 1rem; font-weight: 800; margin-bottom: .4rem; }
+  .modal-about p { color: #57534e; font-size: .92rem; }
+  .modal-about { margin-bottom: 1.4rem; }
+  .modal-bite { border-radius: 14px; padding: 1rem 1.25rem; font-size: .9rem; }
+  .modal-bite.harmless { background: #f0fdf4; border: 1px solid #bbf7d0; color: #14532d; }
+  .modal-bite.care { background: #fffbeb; border: 1px solid #fde68a; color: #713f12; }
+  .modal-bite.watch { background: #fef2f2; border: 1px solid #fecaca; color: #7f1d1d; }
+  .modal-bite h3 { display: flex; align-items: center; gap: .45rem; }
+  .modal-bite a { text-decoration: underline; }
+  .spec-clickable { cursor: pointer; }
+  .spec-link { position: relative; }
+  .spec-click-hint { position:absolute; top:8px; left:8px; z-index:2; background: rgba(12,26,18,.66); color:#fff; font-size:.66rem; font-weight:700; padding:.2rem .55rem; border-radius:999px; opacity:0; transition:opacity .2s; pointer-events:none; letter-spacing:.03em; }
+  .spec:hover .spec-click-hint { opacity:1; }
+  @media (max-width: 640px) {
+    .detail-grid { grid-template-columns: 1fr; }
+    .modal-body { padding: 1.25rem 1.25rem 1.5rem; }
+    .modal-hero { height: 220px; }
+  }
+
   @media (max-width: 800px) {
     .hero .container, .hab-full { grid-template-columns: 1fr; padding-top: 2rem; }
     .hero h1 { font-size: 2rem; }
@@ -302,6 +342,27 @@ footer { border-top: 1px solid var(--border); padding: 2rem 0; background: #fff;
   </div>
 </footer>
 
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
+  <div class="modal" id="modalBox">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <div class="modal-hero" id="modalHero"></div>
+    <div class="modal-body">
+      <div class="modal-title">
+        <h2 id="modalName"></h2>
+        <span class="modal-sci" id="modalSci"></span>
+        <span class="modal-local" id="modalLocal"></span>
+      </div>
+      <div class="modal-badges" id="modalBadges"></div>
+      <div class="detail-grid" id="modalDetails"></div>
+      <div class="modal-about">
+        <h3>About</h3>
+        <p id="modalAbout"></p>
+      </div>
+      <div class="modal-bite" id="modalBite"></div>
+    </div>
+  </div>
+</div>
+
 <script>
 const FAMILIES = [
   { id: 'boidae', name: 'Boas', tag: 'Boidae', note: 'Non-venomous constrictors — several are the islands’ biggest snakes.' },
@@ -368,6 +429,390 @@ const SNAKES = [
   { f:'scolecophidia', n:'Trinidad burrowing snake', l:'Ground puppy', s:'Amerotyphlops trinitatus', img:'amerotyphlops_trinitatus.jpg', v:0, is:'both', d:'A shiny, worm-like burrower of loose soil.' }
 ];
 
+const INFO = {
+  'Boa constrictor constrictor': {
+    h:'Lowland forests, cocoa estates and riverine woodland — often near homes and farms where rats are plentiful.',
+    a:'Nocturnal & crepuscular',
+    z:'2–3.5 m (up to 4 m)',
+    diet:'Rats, opossums and ground birds',
+    mild:0,
+    more:'The macajuel is a constrictor: it squeezes its prey rather than striking with venom. Slow-moving and shy by day, it is one of the islands’ most valuable rat control agents around settlements.',
+    bite:'A firm bite can be long and painful but poses no venom danger. Wash the wound well with soap and water, apply antiseptic, keep it clean, and get a tetanus booster if yours is out of date.'
+  },
+  'Corallus ruschenbergerii': {
+    h:'Swamps, mangroves, lowland forest and forest edges — almost always up in trees or vines.',  a:'Nocturnal',
+    z:'1.5–2.3 m',
+    diet:'Birds, bats, lizards and small mammals',
+    mild:0,
+    more:'The Cook’s tree boa drapes itself over branches and waits for prey to pass, often near water. It has a distinctively wide, blunt head and a calm, slow temperament.',
+    bite:'Non-venomous. A bite can tear skin and is best treated by washing thoroughly with soap and water, applying antiseptic and dressing the wound.'
+  },
+  'Epicrates maurus': {
+    h:'Lowland forest, savanna, plantations and farmland — mostly on the ground or in low shrubs.', a:'Nocturnal',
+    z:'1.2–1.8 m',
+    diet:'Rodents, birds and small mammals',
+    mild:0,
+    more:'The rainbow boa gets its name from the iridescent sheen on its dark scales in sunlight. It is a docile, powerful constrictor that keeps rodent numbers down in agricultural areas.',
+    bite:'Non-venomous. Clean the wound with soap and water and treat as a normal animal bite; if ragged or deep, seek medical care and check tetanus.'
+  },
+  'Eunectes murinus': {
+    h:'Swampy rivers, ponds and marshland in the lowlands — semi-aquatic.', a:'Mostly nocturnal',
+    z:'3–5 m (rarely larger)',
+    diet:'Fish, water birds, caiman and mammals',
+    mild:0,
+    more:'The green anaconda is South America’s heaviest snake and one of the largest in the world. Records for Trinidad are scarce, and it is a fully protected, rarely encountered animal of the deepest swamp country.',
+    bite:'Non-venomous. Any bite should be washed and disinfected; an anaconda bite can carry bacteria from water, so watch for infection.'
+  },
+  'Anilius scytale': {
+    h:'Moist lowland and montane forest — burrows in wet soil and leaf litter.', a:'Crepuscular & nocturnal',
+    z:'40–70 cm',
+    diet:'Caecilians, amphisbaenians and earthworms',
+    mild:0,
+    more:'The rouleau is a primitive, burrowing snake with vivid red-and-black false-coral bands. It is dull-coloured underneath and rarely surfaces except after rain.',
+    bite:'Harmless and rarely bites. If it does, rinse the tiny wound and keep it clean.'
+  },
+  'Atractus trilineatus': {
+    h:'Humid forest floor under logs, rocks and leaf litter — on both islands.', a:'Fossorial, active at dusk & night',
+    z:'25–35 cm',
+    diet:'Earthworms and soft-bodied invertebrates',
+    mild:0,
+    more:'A secretive, worm-like snake whose faint three-lined pattern gives it its name. It is far more common than sightings suggest because it spends its life underground.',
+    bite:'Harmless and extremely unlikely to bite. Wash the skin with soap and water if it does.'
+  },
+  'Atractus univittatus': {
+    h:'Forest floor of Tobago — leaf litter and loose soil.', a:'Fossorial, secretive',
+    z:'20–30 cm',
+    diet:'Earthworms',
+    mild:0,
+    more:'One of the rarest snakes of the islands, known almost entirely from Tobago’s forest floors. It is a delicate little burrower with a single pale stripe down its back.',
+    bite:'Harmless; no venom. Clean the wound and move on — a bite from this snake is virtually unheard of.'
+  },
+  'Chironius carinatus': {
+    h:'Forest edges, cocoa estates and riparian forest — agile in trees and on the ground.', a:'Diurnal',
+    z:'1.5–2 m',
+    diet:'Frogs and lizards',
+    mild:0,
+    more:'The machete savane is a streamlined, fast-moving snake named for the sharp ridge along its back. It is a confident escape artist that flees rather than fights.',
+    bite:'Harmless. It may thrash and scratch if caught; rinse the wound and bandage it.'
+  },
+  'Chironius multiventris': {
+    h:'Tall lowland and foothill forest, favouring the canopy and edges.', a:'Diurnal',
+    z:'Up to 2 m',
+    diet:'Frogs and lizards',
+    mild:0,
+    more:'Like its relative the machete savane, this long-tailed canopy hunter is quick and agile. Its strikingly long tail is its best field mark.',
+    bite:'Harmless. Treat a bite as you would any small animal nip — clean and dress it.'
+  },
+  'Chironius scurrulus': {
+    h:'Forest and forest edges, often near watercourses.', a:'Diurnal',
+    z:'1.2–2 m',
+    diet:'Frogs and small vertebrates',
+    mild:0,
+    more:'The smooth machete savane is a close relative of the machete savane, distinguished by smoother, shinier scales and a more olive tone.',
+    bite:'Harmless. Wash and disinfect the wound.'
+  },
+  'Clelia clelia': {
+    h:'Lowland forest, savanna edges and plantations — terrestrial and powerful.', a:'Nocturnal',
+    z:'Up to 2.5 m',
+    diet:'Other snakes (including the fer-de-lance) and rodents',
+    mild:0,
+    more:'The mussurana is a famously aggressive snake-hunter that overpowers and eats other snakes, and is immune to pit-viper venom. It is dark above with a pale underside and a blunt head.',
+    bite:'Non-venomous but it can strike hard and hold on. Pry it off gently, then wash and dress the wound and check tetanus.'
+  },
+  'Dipsas variegata trinitatis': {
+    h:'Forest, forest edges and gardens — climbs low vegetation at night.', a:'Nocturnal',
+    z:'40–55 cm',
+    diet:'Snails and slugs',
+    mild:0,
+    more:'A gentle snail specialist with specialised jaws that pull snails out of their shells. Its soft brown pattern makes it nearly invisible among tree bark.',
+    bite:'Harmless and extremely placid. A bite would be a barely noticeable nip — wash the skin.'
+  },
+  'Drymarchon corais corais': {
+    h:'Lowland savanna, open woodland, scrub and plantations.', a:'Diurnal',
+    z:'Up to 2.5 m',
+    diet:'Small mammals, birds and other snakes',
+    mild:0,
+    more:'The yellow-tailed cribo is a large, fast, confident snake that may stand its ground rather than flee. It is a superb hunter of rats and even other snakes.',
+    bite:'Not venomous, but it can bite hard in self-defence. Clean the wound thoroughly, dress it and seek medical attention if it is deep.'
+  },
+  'Erythrolamprus aesculapii': {
+    h:'Forest floor, edges and plantations — a ground-level mimic.', a:'Diurnal & crepuscular',
+    z:'50–70 cm',
+    diet:'Lizards and small snakes',
+    mild:0,
+    more:'The false coral mimics the banded pattern of the true coral snake to scare off predators — but it is completely harmless. Its red-and-black bands are a classic trick of the forest floor.',
+    bite:'Harmless. It may flatten and mimic a coral snake, but bites are trivial — just clean the spot.'
+  },
+  'Erythrolamprus bizona': {
+    h:'Forest and forest edges, gardens and plantations.', a:'Diurnal & crepuscular',
+    z:'60–80 cm',
+    diet:'Lizards and small snakes',
+    mild:0,
+    more:'Another harmless coral-mimic with bold bands. When threatened it may shake its tail like a rattler — a bluff with no bite behind it.',
+    bite:'Harmless. Rinse and clean the wound; nothing more needed.'
+  },
+  'Erythrolamprus ocellatus': {
+    h:'Tobago’s forests and forest edges.', a:'Diurnal',
+    z:'40–60 cm',
+    diet:'Lizards and small vertebrates',
+    mild:0,
+    more:'Tobago’s own coral-mimic, found nowhere else on Earth. It is a shy, ground-dwelling snake that relies on its banded pattern to keep predators guessing.',
+    bite:'Harmless. Clean the skin if bitten.'
+  },
+  'Helicops angulatus': {
+    h:'Streams, ponds, drainage ditches and rice fields — a true water snake.', a:'Active day & night',
+    z:'50–75 cm',
+    diet:'Fish and tadpoles',
+    mild:1,
+    more:'The water mapepire is fully at home in water, swimming well and diving to escape. It has keeled scales and retreats to the water almost instantly when disturbed.',
+    bite:'Rear-fanged and mildly venomous. Bites are uncommon and rarely serious, but can cause local pain and swelling — clean the wound and seek medical advice if symptoms develop.'
+  },
+  'Hydrops triangularis': {
+    h:'Slow-moving waters, swamps and flooded forest.', a:'Nocturnal & crepuscular',
+    z:'60–80 cm',
+    diet:'Eels, catfish and other aquatic prey',
+    mild:1,
+    more:'The water coral is a specialist of dark, slow waters where it hunts eels and catfish. Its loose, grooved rear fangs deliver venom adapted for paralysing slippery fish.',
+    bite:'Mildly venomous to fish; of little danger to people, though a bite may be briefly painful. Clean well and watch for any swelling.'
+  },
+  'Imantodes cenchoa': {
+    h:'Lowland forest, canopy and edges — also cocoa estates and gardens.', a:'Nocturnal',
+    z:'Up to 1.4 m',
+    diet:'Anoles, geckos and small frogs',
+    mild:1,
+    more:'The fiddle-string snake is extremely slender, with a huge head on a thread of a neck. By day it rests coiled and hidden; by night it hunts sleeping lizards in the canopy.',
+    bite:'Mildly venomous by rear fangs; harmless to humans in practice. Clean the wound and monitor for any reaction.'
+  },
+  'Leptodeira annulata': {
+    h:'Forest, gardens, plantations — often near water and in low foliage.', a:'Nocturnal',
+    z:'50–70 cm',
+    diet:'Frogs and their eggs',
+    mild:1,
+    more:'The cat-eyed night snake has vertical pupils and an unremarkable pattern, yet it is endlessly mistaken for something dangerous. It is shy, mild-natured and hunts frogs at night.',
+    bite:'Rear-fanged with mild venom effective on amphibians. To a person a bite is essentially harmless — wash and dress it.'
+  },
+  'Leptophis ahaetulla coeruleodorsus': {
+    h:'Cocoa estates, forest edges and secondary growth — an arboreal canopy snake.', a:'Diurnal',
+    z:'1–1.5 m',
+    diet:'Frogs, lizards and small birds',
+    mild:0,
+    more:'The lora is a graceful, vividly green snake that glides through cocoa trees and forest edges. It is alert and quick, vanishing into the canopy at the first sign of danger.',
+    bite:'Harmless. It may gape or thrash but cannot harm you — clean the skin and let it be.'
+  },
+  'Leptophis stimsoni': {
+    h:'Lowland and foothill forest, cocoa estates — arboreal.', a:'Diurnal',
+    z:'Up to 1.2 m',
+    diet:'Frogs, lizards and small birds',
+    mild:0,
+    more:'The grey lora is the paler, grey-toned cousin of the parrot snake, sharing its graceful canopy lifestyle and sharp eyesight.',
+    bite:'Harmless. Treat any nip with a simple clean and antiseptic.'
+  },
+  'Erythrolamprus cobella': {
+    h:'Mangroves, swamps and wet woodland — often near brackish water.', a:'Nocturnal & crepuscular',
+    z:'60–90 cm',
+    diet:'Fish, frogs and aquatic invertebrates',
+    mild:0,
+    more:'The mangrove snake is a dark-coloured, semi-aquatic hunter of the islands’ mangrove edges and swampy woodland.',
+    bite:'Harmless. Clean and dress any bite.'
+  },
+  'Erythrolamprus melanotus': {
+    h:'Open country, gardens, roadsides and savanna — the classic “doctor snake” of village yards.', a:'Diurnal',
+    z:'35–50 cm',
+    diet:'Toads and small frogs',
+    mild:0,
+    more:'The doctor snake earns its local name, “beh belle chemin”, because it “walks on the road”. It is one of the most familiar harmless snakes of settled areas and an avid toad-eater.',
+    bite:'Harmless. A tiny nip at worst — wash the skin.'
+  },
+  'Erythrolamprus zweifeli': {
+    h:'Montane and lowland forest, especially deep, moist high woods.', a:'Diurnal',
+    z:'40–60 cm',
+    diet:'Small snakes and lizards',
+    mild:0,
+    more:'The high woods coral is a false-coral mimic of the deep forest, blending an unmistakable banded pattern with the shy habits of the true forest floor.',
+    bite:'Harmless. Clean the wound as a precaution.'
+  },
+  'Mastigodryas boddaerti boddaerti': {
+    h:'Tobago’s forest edges, secondary growth and gardens.', a:'Diurnal',
+    z:'1–1.4 m',
+    diet:'Lizards, frogs and small rodents',
+    mild:0,
+    more:'Tobago’s own fast-moving racer darts through forest edges by day. The Tobago race (“boddaerti”) and the Trinidad race (“dunni”) are close cousins separated by the sea.',
+    bite:'Harmless. It is quick to flee; any bite is a simple scratch to be washed and dressed.'
+  },
+  'Mastigodryas boddaerti dunni': {
+    h:'Trinidad’s forest edges, gardens and plantations.', a:'Diurnal',
+    z:'1–1.4 m',
+    diet:'Lizards, frogs and small rodents',
+    mild:0,
+    more:'The Trinidad racer is a fast, sun-loving day hunter found at forest edges and around farms, where it keeps lizard and rodent numbers in check.',
+    bite:'Harmless. Clean and dress any minor bite.'
+  },
+  'Ninia atrata': {
+    h:'Humid forest floor — under logs, rocks and leaf litter.', a:'Secretive, active at night',
+    z:'25–35 cm',
+    diet:'Earthworms and insect larvae',
+    mild:0,
+    more:'The red-nape snake has a striking reddish collar behind its dark head. Despite its high-contrast look, it is a timid worm-eater of the forest floor.',
+    bite:'Harmless and effectively never bites people. No treatment beyond clean water if managed.'
+  },
+  'Oxybelis aeneus': {
+    h:'Forest edges, savanna edges and gardens — an arboreal vine snake.', a:'Diurnal',
+    z:'1–1.3 m',
+    diet:'Lizards and frogs',
+    mild:1,
+    more:'The horsewhip is impossibly thin, like a length of vine. It often sits motionless with the front of its body extended, waiting to snatch lizards in mid-air.',
+    bite:'Rear-fanged and mildly venomous. Bites can cause local pain and swelling but are rarely serious; wash well and seek advice if symptoms progress.'
+  },
+  'Oxyrhopus petola': {
+    h:'Forest, forest edges and plantations — ground and low vegetation.', a:'Nocturnal',
+    z:'50–80 cm',
+    diet:'Mice and small vertebrates',
+    mild:1,
+    more:'The calico snake’s bands of red, black and yellow make it a convincing coral-mimic. It is a quiet, mouse-eating snake of the night-time forest edge.',
+    bite:'Mildly venomous by rear fangs — harmless to most people but observe any bite and seek help if there is significant local reaction.'
+  },
+  'Pseudoboa neuwiedii': {
+    h:'Forest edges, plantations and gardens — a terrestrial rat-hunter.', a:'Nocturnal',
+    z:'80–120 cm',
+    diet:'Rats and other rodents',
+    mild:0,
+    more:'The ratonel is a glossy, handsome snake with a solidly-built body — the farmer’s quiet ally against rats. Despite its robust appearance it is gentle and avoids people.',
+    bite:'Harmless. Clean and dress the wound.'
+  },
+  'Pseustes poecilonotus polylepis': {
+    h:'Forest canopy and edges — a bird-hunting climber.', a:'Diurnal',
+    z:'Up to 2 m',
+    diet:'Birds and occasionally small mammals',
+    mild:0,
+    more:'The dos cocorite is an agile canopy hunter that takes birds on the wing. Its dark mask and quick movements make it a striking but harmless presence in the treetops.',
+    bite:'Harmless. It may strike in defence; wash and dress the bite.'
+  },
+  'Pseustes sulphureus': {
+    h:'Forest edges and open woodland — arboreal.', a:'Diurnal',
+    z:'Up to 1.8 m',
+    diet:'Birds and small mammals',
+    mild:0,
+    more:'The yellow-bellied puffing snake puts on a dramatic bluff: it raises the front of its body, spreads its neck and hisses loudly — but there is no venom behind the show.',
+    bite:'Harmless. Its display is a threat, not an attack; any bite is a clean-and-dress affair.'
+  },
+  'Sibon nebulata nebulata': {
+    h:'Cocoa and coffee estates, forest edges — low arboreal and in leaf litter.', a:'Nocturnal',
+    z:'40–60 cm',
+    diet:'Snails and slugs',
+    mild:0,
+    more:'The clouded snake is a gentle snail-eater that thrives among cocoa and coffee plants, where it patrols for slugs in the cool of the night.',
+    bite:'Harmless. A placid snake; any bite is inconsequential — clean the skin.'
+  },
+  'Siphlophis cervinus': {
+    h:'Lowland and foothill forest — often in low branches and vines.', a:'Nocturnal',
+    z:'60–80 cm',
+    diet:'Lizards and small rodents',
+    mild:0,
+    more:'The checkerbelly is a beautiful, secretive liana-snake with a chequered underbelly and a bold dorsal pattern. It blends into the forest by night.',
+    bite:'Harmless. Wash and dress any bite.'
+  },
+  'Spilotes pullatus': {
+    h:'Forest edges, secondary growth, barns, attics and rafters — the true “chicken snake”.', a:'Diurnal',
+    z:'Up to 2.5 m',
+    diet:'Rats, birds and occasionally chickens',
+    mild:0,
+    more:'The tigre is big, bold and strikingly marked in yellow and black. It regularly shelters in buildings hunting rats and is arguably the most impressive harmless snake most people will ever see up close.',
+    bite:'Non-venomous but strong. It can bite firmly and repeatedly if cornered — let it leave, and for bites wash, dress and check tetanus.'
+  },
+  'Tantilla melanocephala': {
+    h:'Forest floor, gardens and cultivated areas — under rocks, logs and debris.', a:'Fossorial, secretive',
+    z:'20–30 cm',
+    diet:'Centipedes and insects',
+    mild:0,
+    more:'The black-headed snake is a tiny, gentle burrower with a neat dark cap. It passes its life underground hunting centipedes.',
+    bite:'Harmless. A bite is a curiosity, nothing more.'
+  },
+  'Thamnodynastes ramonriveroi': {
+    h:'Swamps, marshes and wet savanna near water.', a:'Crepuscular & nocturnal',
+    z:'40–55 cm',
+    diet:'Frogs and small fish',
+    mild:1,
+    more:'A rarely encountered swamp specialist with faint stripes and a wary nature. It was described as a distinct species relatively recently and remains poorly known.',
+    bite:'Rear-fanged and mildly venomous. Pain and local swelling are possible; clean the wound and seek medical advice if symptoms develop.'
+  },
+  'Tripanurgos compressus': {
+    h:'Lowland forest, swamp forest and edges — arboreal.', a:'Nocturnal',
+    z:'80–120 cm',
+    diet:'Lizards and small mammals',
+    mild:1,
+    more:'The mapepire de fe — “fire mapepire” — is a striking red-and-white snake of the night-time forest. Despite its fiery name it poses little danger to people.',
+    bite:'Mildly venomous by rear fangs. Local pain possible but serious envenomation is essentially unknown — clean well and monitor.'
+  },
+  'Micrurus circinalis': {
+    h:'Forest, plantations and grasslands — ground-dwelling and secretive.', a:'Diurnal & crepuscular',
+    z:'60–90 cm',
+    diet:'Other snakes, caecilians and lizards',
+    mild:0,
+    venomous:1,
+    more:'Trinidad’s common coral snake is a true elapid with fixed front fangs and a potent neurotoxic venom. It is shy and bites only when stepped on or handled.',
+    bite:'VENOMOUS. Keep the person calm and still; do NOT cut, suck or apply a tourniquet. Remove rings/watches, immobilise the limb and get to hospital immediately — antivenom is held at Port of Spain General Hospital. Try to photograph the snake safely.'
+  },
+  'Micrurus lemniscatus diutius': {
+    h:'Forest and marshy edges — ground-dwelling.', a:'Crepuscular & nocturnal',
+    z:'80–120 cm',
+    diet:'Other snakes and amphisbaenians',
+    mild:0,
+    venomous:1,
+    more:'The larger of Trinidad’s two coral snakes has wide yellow bands and broad black-and-red rings. Its bite packs the same neurotoxic punch as the smaller species — never a snake to handle.',
+    bite:'VENOMOUS. Stay calm and still — do NOT cut, suck or apply a tourniquet. Remove jewellery from the limb, immobilise it and head straight to hospital for antivenom at Port of Spain General Hospital. A safe photograph helps doctors.'
+  },
+  'Bothrops atrox': {
+    h:'Forest, cocoa estates, plantations and scrub — terrestrial, well-camouflaged in leaf litter.', a:'Nocturnal & crepuscular',
+    z:'1.2–1.8 m',
+    diet:'Rats, opossums, birds and frogs',
+    mild:0,
+    venomous:1,
+    more:'The fer-de-lance — the famous mapepire — causes virtually all serious bites in Trinidad. It is shy and well-camouflaged, and usually strikes only when stepped on or startled. Most bites happen at night when people walk in snake country without a light.',
+    bite:'VENOMOUS — treat as an emergency. Keep the person calm and still, do NOT cut, suck or apply a tourniquet, remove rings/watches, immobilise the limb and get to hospital immediately. Antivenom is available at Port of Spain General Hospital.'
+  },
+  'Lachesis muta': {
+    h:'Deep, wet Northern Range forest — the true bushmaster country.', a:'Nocturnal',
+    z:'Up to 3 m',
+    diet:'Rats, opossums and small mammals',
+    mild:0,
+    venomous:1,
+    more:'The bushmaster is the largest venomous snake in the Americas and Trinidad’s mountain king. It is extremely rare, secretive and most likely to be encountered on remote wet-forest trails after dark — and it warns with a loud, dry tail-stutter.',
+    bite:'VENOMOUS — an immediate emergency. Keep the person still and calm, do NOT cut, suck or apply a tourniquet, remove rings/watches, immobilise the limb and evacuate to hospital. Antivenom is held at Port of Spain General Hospital.'
+  },
+  'Leptotyphlops albifrons': {
+    h:'Ant and termite nests, gardens, savanna and loose soil — fossorial.', a:'Fossorial, active day & night',
+    z:'15–25 cm',
+    diet:'Ant and termite larvae',
+    mild:0,
+    more:'The ground puppy is a thread-thin blind snake that lives its entire life among ants and termites. It is often dug up in gardens and mistaken for an earthworm.',
+    bite:'Harmless. It has no fangs capable of piercing human skin — no concern at all.'
+  },
+  'Helminthophis flavoterminatus': {
+    h:'Montane forest soils of the Northern Range — fossorial.', a:'Fossorial',
+    z:'~15 cm',
+    diet:'Ant and termite larvae',
+    mild:0,
+    more:'The yellow-headed ground puppy is one of the rarest snakes in the world — known from a single locality in Trinidad’s Northern Range. It is tiny, blind and completely harmless.',
+    bite:'Harmless beyond measure. A bite from this species has never been recorded.'
+  },
+  'Amerotyphlops brongersmianus': {
+    h:'Deep, moist soils of forest and gardens — fossoorial rock-and-root country.', a:'Fossorial',
+    z:'25–35 cm',
+    diet:'Ant and termite larvae and pupae',
+    mild:0,
+    more:'A small, glossy worm snake of deep soft soil, rarely seen unless dug up. Its smooth, tightly-packed scales let it burrow with little friction.',
+    bite:'Harmless; effectively incapable of biting a human — no concern.'
+  },
+  'Amerotyphlops trinitatus': {
+    h:'Loose soil and leaf litter on both islands — fossorial.', a:'Fossorial',
+    z:'20–30 cm',
+    diet:'Ant and termite larvae',
+    mild:0,
+    more:'The Trinidad burrowing snake is a shiny, earthworm-like blind snake found on both islands under rocks, logs and in gardens. It feeds on ant and termite brood.',
+    bite:'Harmless. Its mouth is far too small to bite a person — not a threat.'
+  }
+};
+
 const venomSet = new Set();
 const famCount = {};
 SNAKES.forEach(x => { famCount[x.f] = (famCount[x.f]||0) + 1; if (x.v) venomSet.add(x.f); });
@@ -388,12 +833,16 @@ const iso = x => x === 'both'
   : (x === 'tobago' ? '<i class="on">Tobago</i>' : '<i class="on">Trinidad</i>');
 
 let html = '';
+const indexMap = {};
+SNAKES.forEach((x, i) => indexMap[x.s] = i);
 for (const fam of FAMILIES) {
   const items = SNAKES.filter(x => x.f === fam.id);
   if (!items.length) continue;
   html += '<div class="family"><h3>' + fam.name + ' <span class="fam-tag">' + fam.tag + '</span></h3><p>' + fam.note + '</p><div class="spec-grid">';
   items.forEach(x => {
-    html += '<div class="spec">' + imgTag(x.img, x.n, x.s)
+    html += '<div class="spec spec-clickable" data-i="' + indexMap[x.s] + '">'
+      + '<span class="spec-click-hint">Click for details</span>'
+      + imgTag(x.img, x.n, x.s)
       + '<div class="spec-body"><div class="spec-name"><h3>' + x.n + '</h3><span class="spec-local">' + x.l + '</span></div>'
       + '<div class="spec-sci">' + x.s + '</div>'
       + badge(x.v) + '<div class="spec-iso">' + iso(x.is) + '</div>'
@@ -402,6 +851,56 @@ for (const fam of FAMILIES) {
   html += '</div></div>';
 }
 document.getElementById('gallery').innerHTML = html;
+
+const modalEl = document.getElementById('modal');
+const modalBox = document.getElementById('modalBox');
+const escapeHtml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function openModal(i) {
+  const x = SNAKES[i];
+  const info = INFO[x.s] || { h:'Forest and open areas.', a:'Varies by season', z:'Varies', diet:'Small animals', mild:0, more:x.d, bite:'Unknown — treat any bite by cleaning and observing.' };
+  document.getElementById('modalHero').innerHTML = x.img
+    ? '<img src="images/' + x.img + '" alt="' + escapeHtml(x.n) + '">'
+    : '<div class="spec-nophoto">🐍</div>';
+  document.getElementById('modalName').textContent = x.n;
+  document.getElementById('modalSci').textContent = x.s;
+  document.getElementById('modalLocal').textContent = x.l && x.l !== '—' ? x.l : '';
+  document.getElementById('modalBadges').innerHTML = badge(x.v) + '<div class="spec-iso">' + iso(x.is) + '</div>';
+  document.getElementById('modalDetails').innerHTML =
+    '<div class="detail-cell"><b>Habitat</b>' + escapeHtml(info.h) + '</div>'
+    + '<div class="detail-cell"><b>Activity</b>' + escapeHtml(info.a) + '</div>'
+    + '<div class="detail-cell"><b>Typical size</b>' + escapeHtml(info.z) + '</div>'
+    + '<div class="detail-cell"><b>Diet</b>' + escapeHtml(info.diet) + '</div>';
+  document.getElementById('modalAbout').textContent = info.more;
+  const biteEl = document.getElementById('modalBite');
+  const venomous = x.v;
+  const mild = !!info.mild;
+  if (venomous) {
+    biteEl.className = 'modal-bite watch';
+    biteEl.innerHTML = '<h3><span>⚠️</span> If bitten — emergency</h3><p>' + escapeHtml(info.bite || 'Seek medical help immediately.') + '</p><p style="margin-top:.5rem;font-size:.82rem;">Emergency: <strong>999</strong> Police · <strong>811</strong> Ambulance · <strong>990</strong> Fire · Antivenom via <strong>Port of Spain General Hospital</strong>.</p>';
+  } else if (mild) {
+    biteEl.className = 'modal-bite care';
+    biteEl.innerHTML = '<h3><span>⚠️</span> If bitten — stay calm</h3><p>' + escapeHtml(info.bite || 'Mildly venomous — usually no more than local pain and swelling. Clean the wound and see a doctor if symptoms develop.') + '</p><p style="margin-top:.5rem;font-size:.82rem;">If symptoms worsen, get to hospital: <strong>999</strong> Police · <strong>811</strong> Ambulance.</p>';
+  } else {
+    biteEl.className = 'modal-bite harmless';
+    biteEl.innerHTML = '<h3><span>✓</span> If bitten</h3><p>' + escapeHtml(info.bite || 'Harmless. Wash the wound and keep it clean.') + '</p>';
+  }
+  modalEl.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modalEl.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('gallery').addEventListener('click', e => {
+  const card = e.target.closest('.spec-clickable');
+  if (card) openModal(parseInt(card.getAttribute('data-i'), 10));
+});
+document.getElementById('modalClose').addEventListener('click', closeModal);
+modalEl.addEventListener('click', e => { if (e.target === modalEl) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 </script>
 
 </body>
