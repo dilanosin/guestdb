@@ -69,6 +69,7 @@
   .spec-body { padding: 1.25rem; }
   .spec-name { margin-bottom: 0.4rem; }
   .spec-name h3 { font-size: 1.05rem; font-weight: 700; }
+  .spec-sci { font-size: 0.78rem; color: #16a34a; font-style: italic; font-weight: 600; }
   .spec-local { font-size: 0.78rem; color: #78716c; font-style: italic; }
   .spec-badge { display: inline-block; margin-top: 0.4rem; font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 999px; }
   .badge-safe { background: #f0fdf4; color: #15803d; }
@@ -76,6 +77,16 @@
   .badge-watch { background: #fffbeb; color: #b45309; }
   .spec p { color: #78716c; font-size: 0.9rem; }
   .spec img { width: 100%; height: 100%; object-fit: cover; }
+  .spec-count { display: flex; justify-content: center; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 2rem; }
+  .spec-count span { background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; border-radius: 999px; padding: 0.45rem 1rem; font-size: 0.85rem; font-weight: 700; }
+  .family { margin-bottom: 2.6rem; }
+  .family h3 { font-size: 1.15rem; font-weight: 800; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.5rem; }
+  .family .fam-tag { font-size: 0.72rem; font-weight: 700; color: #15803d; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.15rem 0.6rem; border-radius: 999px; }
+  .family p { color: #a8a29e; font-size: 0.85rem; margin-bottom: 1rem; }
+  .spec-iso { display: flex; gap: 0.4rem; margin-top: 0.55rem; }
+  .spec-iso i { font-style: normal; font-size: 0.68rem; font-weight: 700; padding: 0.12rem 0.45rem; border-radius: 6px; background: #f5f5f4; color: #57534e; border: 1px solid #e7e5e4; }
+  .spec-iso i.on { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+  .spec-nophoto { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 2.6rem; background: linear-gradient(135deg, #f0fdf4, #e7f5eb); color: #16a34a; }
 
   .habitat { padding: 4.5rem 0; background: #f7f6f2; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
   .hab-full { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
@@ -128,6 +139,17 @@
   </div>
 </nav>
 
+<section class="facts" id="facts">
+  <div class="container">
+    <div class="facts-grid">
+      <div><div class="fact-num">Protected by law</div><div class="fact-label">Killing snakes is illegal in Trinidad &amp; Tobago</div></div>
+      <div><div class="fact-num">"Mapepire"</div><div class="fact-label">Local name for the venomous Fer-de-lance</div></div>
+      <div><div class="fact-num">Garden ally</div><div class="fact-label">Snakes control rats on farmland &amp; estates</div></div>
+      <div><div class="fact-num">No coral death</div><div class="fact-label">Fatal snakebites are extremely rare in T&amp;T</div></div>
+    </div>
+  </div>
+</section>
+
 <header class="hero">
   <svg class="hero-snake" viewBox="0 0 200 200" fill="none" stroke="#16a34a" stroke-width="6" stroke-linecap="round">
     <path d="M15 185 C 70 120, 40 60, 100 55 C 150 50, 130 15, 175 25"/>
@@ -148,7 +170,7 @@
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
         <div>
-          <div class="stat-value">40+</div>
+          <div class="stat-value">47</div>
           <div class="stat-label">Snake species recorded in T&amp;T</div>
         </div>
       </div>
@@ -157,9 +179,9 @@
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="4.93 4.93 19.07 19.07"/></svg>
         </div>
         <div>
-          <div class="stat-value">5</div>
+          <div class="stat-value">4</div>
           <div class="stat-label">Venomous species to respect</div>
-          <div class="stat-local">The rest are harmless and protected.</div>
+          <div class="stat-local">44 in Trinidad, 21 in Tobago.</div>
         </div>
       </div>
       <div class="stat-row">
@@ -176,73 +198,18 @@
   </div>
 </header>
 
-<section class="facts" id="facts">
-  <div class="container">
-    <div class="facts-grid">
-      <div><div class="fact-num">Protected by law</div><div class="fact-label">Killing snakes is illegal in Trinidad &amp; Tobago</div></div>
-      <div><div class="fact-num">"Mapepire"</div><div class="fact-label">Local name for the venomous Fer-de-lance</div></div>
-      <div><div class="fact-num">Garden ally</div><div class="fact-label">Snakes control rats on farmland &amp; estates</div></div>
-      <div><div class="fact-num">No coral death</div><div class="fact-label">Fatal snakebites are extremely rare in T&amp;T</div></div>
-    </div>
-  </div>
-</section>
-
 <section class="species" id="species">
   <div class="container">
     <div class="section-title">
-      <h2>The snakes you'll hear about</h2>
-      <p>Six species Trinidadians know by name — and how to read them at a glance.</p>
+      <h2>The snakes of Trinidad &amp; Tobago</h2>
+      <p>The complete checklist — every species recorded on the two islands, by name, family and where it lives.</p>
     </div>
-    <div class="spec-grid">
-      <div class="spec">
-        <div class="spec-img"><img src="images/bothrops.jpg" alt="Fer-de-lance (Bothrops atrox)"></div>
-        <div class="spec-body">
-          <div class="spec-name"><h3>Fer-de-lance</h3><span class="spec-local">"Mapepire"</span></div>
-          <span class="spec-badge badge-care">Venomous — give space</span>
-          <p>The lancehead everyone warns you about. Shy, well-camouflaged pit viper; rarely aggressive unless startled.</p>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec-img"><img src="images/lachesis.jpg" alt="Bushmaster (Lachesis muta)"></div>
-        <div class="spec-body">
-          <div class="spec-name"><h3>Bushmaster</h3><span class="spec-local">"Mapepire Z'Ancana"</span></div>
-          <span class="spec-badge badge-care">Venomous — rare</span>
-          <p>The largest venomous snake in the Americas, found high in the Northern Range forests. Deeply reclusive.</p>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec-img"><img src="images/boa.jpg" alt="Boa constrictor"></div>
-        <div class="spec-body">
-          <div class="spec-name"><h3>Boa constrictor</h3><span class="spec-local">"Macajuel"</span></div>
-          <span class="spec-badge badge-safe">Harmless constrictor</span>
-          <p>Trinidad's gentle giant. Non-venomous and a superb natural pest controller near homes and farms.</p>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec-img"><img src="images/coral.jpg" alt="Coral snake (Micrurus lemniscatus)"></div>
-        <div class="spec-body">
-          <div class="spec-name"><h3>Coral snake</h3><span class="spec-local">Small, banded</span></div>
-          <span class="spec-badge badge-care">Venomous</span>
-          <p>Brilliant red, yellow and black bands. Non-aggressive and rarely encountered — admire, don't touch.</p>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec-img"><img src="images/treeboa.jpg" alt="Tree boa (Corallus hortulanus)"></div>
-        <div class="spec-body">
-          <div class="spec-name"><h3>Tree boa</h3><span class="spec-local">"Corde violet"</span></div>
-          <span class="spec-badge badge-safe">Harmless</span>
-          <p>A graceful arboreal boa often seen draped over forest branches. Excellent climber, feeds on birds &amp; rodents.</p>
-        </div>
-      </div>
-      <div class="spec">
-        <div class="spec-img"><img src="images/silky.jpg" alt="Silky snake (Sibon nebulata)"></div>
-        <div class="spec-body">
-          <div class="spec-name"><h3>Silky snake</h3><span class="spec-local">"Cashew snake"</span></div>
-          <span class="spec-badge badge-safe">Harmless</span>
-          <p>A slim, gentle snake that loves cocoa and coffee estates. Eats soft-bodied prey and minds its business.</p>
-        </div>
-      </div>
+    <div class="spec-count">
+      <span id="spTotal">…</span>
+      <span id="spVenom">…</span>
+      <span>Protected by the Conservation of Wildlife Act</span>
     </div>
+    <div id="gallery"></div>
   </div>
 </section>
 
@@ -330,6 +297,108 @@
     <span>© 2026 Serpentia TT. A celebration of local snakes.</span>
   </div>
 </footer>
+
+<script>
+const FAMILIES = [
+  { id: 'boidae', name: 'Boas', tag: 'Boidae', note: 'Non-venomous constrictors — several are the islands’ biggest snakes.' },
+  { id: 'colubridae', name: 'Colubrids', tag: 'Colubridae', note: 'The largest group — mostly harmless, some mildly venomous to prey.' },
+  { id: 'elapidae', name: 'Coral snakes', tag: 'Elapidae', note: 'Fixed-front-fang venomous snakes with vivid bands. Avoid handling.' },
+  { id: 'viperidae', name: 'Pit vipers', tag: 'Viperidae', note: 'Trinidad’s two heavy-bodied venomous snakes — respect them.' },
+  { id: 'aniliidae', name: 'Pipe snake', tag: 'Aniliidae', note: 'A single burrowing false-coral species, the rouleau.' },
+  { id: 'scolecophidia', name: 'Blind, thread & worm snakes', tag: 'Typhlopidae · Leptotyphlopidae', note: 'Tiny burrowing snakes, often mistaken for earthworms.' }
+];
+const SNAKES = [
+  // Boidae
+  { f:'boidae', n:'Boa constrictor', l:'Macajuel', s:'Boa constrictor constrictor', img:'boa.jpg', v:0, is:'both', d:'Trinidad’s gentle giant — a superb rat controller around homes and farms.' },
+  { f:'boidae', n:'Cook’s tree boa', l:'Cascabel dormillon', s:'Corallus ruschenbergerii', img:'corallus_ruschenbergerii.jpg', v:0, is:'both', d:'An arboreal boa draped over forest branches; feeds on birds and bats.' },
+  { f:'boidae', n:'Rainbow boa', l:'Couleuvre', s:'Epicrates maurus', img:'epicrates_maurus.jpg', v:0, is:'both', d:'A glossy boa with an iridescent sheen in sunlight. Mostly nocturnal.' },
+  { f:'boidae', n:'Green anaconda', l:'Huille', s:'Eunectes murinus', img:'eunectes_murinus.jpg', v:0, is:'trinidad', d:'South America’s largest snake — rare, found near swampy rivers.' },
+  // Aniliidae
+  { f:'aniliidae', n:'Rouleau', l:'Burrowing false coral', s:'Anilius scytale', img:null, v:0, is:'trinidad', d:'A primitive burrowing snake with bright false-coral bands.' },
+  // Colubridae
+  { f:'colubridae', n:'Three-lined ground snake', l:'—', s:'Atractus trilineatus', img:null, v:0, is:'both', d:'A secretive, worm-like forest floor specialist.' },
+  { f:'colubridae', n:'Tobago one-lined ground snake', l:'—', s:'Atractus univittatus', img:null, v:0, is:'tobago', d:'A rarely seen burrower known only from Tobago.' },
+  { f:'colubridae', n:'Machete savane', l:'Machete savane', s:'Chironius carinatus', img:'chironius_carinatus.jpg', v:0, is:'trinidad', d:'Streamlined, fast canopy snake named after its sharp dorsal ridge.' },
+  { f:'colubridae', n:'Long-tailed machete savane', l:'Machete savane', s:'Chironius multiventris', img:null, v:0, is:'trinidad', d:'A canopy hunter with an impressively long tail.' },
+  { f:'colubridae', n:'Smooth machete savane', l:'Machete savane', s:'Chironius scurrulus', img:'chironius_scurrulus.jpg', v:0, is:'trinidad', d:'A close relative of the machete savane with smoother scales.' },
+  { f:'colubridae', n:'Mussurana', l:'Black cribo', s:'Clelia clelia', img:null, v:0, is:'trinidad', d:'A powerful snake-hunter that even preys on the fer-de-lance.' },
+  { f:'colubridae', n:'Snail-eating snake', l:'—', s:'Dipsas variegata trinitatis', img:'dipsas_variegata.jpg', v:0, is:'trinidad', d:'Specially adapted jaws to pull snails out of their shells.' },
+  { f:'colubridae', n:'Yellow-tailed cribo', l:'Cribo', s:'Drymarchon corais corais', img:'drymarchon_corais.jpg', v:0, is:'both', d:'A large, fast, non-venomous snake with a distinctly yellow tail.' },
+  { f:'colubridae', n:'False coral', l:'—', s:'Erythrolamprus aesculapii', img:null, v:0, is:'trinidad', d:'A coral-mimic with bold black and red bands.' },
+  { f:'colubridae', n:'False coral', l:'—', s:'Erythrolamprus bizona', img:'erythrolamprus_bizona.jpg', v:0, is:'trinidad', d:'Banded like a coral snake but harmless; mimics for protection.' },
+  { f:'colubridae', n:'Tobago false coral', l:'Red snake', s:'Erythrolamprus ocellatus', img:null, v:0, is:'tobago', d:'Tobago’s own coral-mimic — found nowhere else.' },
+  { f:'colubridae', n:'Water mapepire', l:'Water mapepire', s:'Helicops angulatus', img:null, v:0, is:'trinidad', d:'A keeled, semi-aquatic fish-hunter of ponds and streams.' },
+  { f:'colubridae', n:'Water coral', l:'Water coral', s:'Hydrops triangularis', img:null, v:0, is:'trinidad', d:'Swims well and feeds on eels and catfish.' },
+  { f:'colubridae', n:'Fiddle-string snake', l:'Corde violon', s:'Imantodes cenchoa', img:'imantodes_cenchoa.jpg', v:0, is:'both', d:'Extremely slender night snake — and a champion lizard-eater.' },
+  { f:'colubridae', n:'Cat-eyed night snake', l:'False mapepire', s:'Leptodeira annulata', img:'leptodeira_annulata.jpg', v:0, is:'both', d:'Vertical pupils and mild venom; mistaken for the coral snake’s cousin.' },
+  { f:'colubridae', n:'Parrot snake', l:'Lora', s:'Leptophis ahaetulla coeruleodorsus', img:null, v:0, is:'both', d:'A graceful green canopy snake of cocoa and forest edges.' },
+  { f:'colubridae', n:'Grey lora', l:'Gray lora', s:'Leptophis stimsoni', img:'leptophis_stimsoni.jpg', v:0, is:'trinidad', d:'A graceful green parrot-snake; often around cocoa trees.' },
+  { f:'colubridae', n:'Mangrove snake', l:'Mapepire mangue', s:'Erythrolamprus cobella', img:'erythrolamprus_cobella.jpg', v:0, is:'trinidad', d:'Dark woodland snake found near mangroves and swamps.' },
+  { f:'colubridae', n:'Doctor snake', l:'Beh belle chemin', s:'Erythrolamprus melanotus', img:null, v:0, is:'both', d:'Name means “walks on the road”; mainly a toad-eater.' },
+  { f:'colubridae', n:'High woods coral', l:'—', s:'Erythrolamprus zweifeli', img:'erthryolamprus_zweifeli.jpg', v:0, is:'both', d:'A false-coral mimic of the deep forest.' },
+  { f:'colubridae', n:'Machete couesse', l:'Tobago racer', s:'Mastigodryas boddaerti boddaerti', img:null, v:0, is:'tobago', d:'Tobago’s fast day-hunter of forest edges.' },
+  { f:'colubridae', n:'Machete couesse', l:'Trinidad racer', s:'Mastigodryas boddaerti dunni', img:null, v:0, is:'trinidad', d:'A fast day-hunter of forest edges and gardens.' },
+  { f:'colubridae', n:'Red-nape snake', l:'Ring-neck snake', s:'Ninia atrata', img:'ninia_atrata.jpg', v:0, is:'both', d:'A small harmless snake with a striking reddish nape.' },
+  { f:'colubridae', n:'Horsewhip', l:'Horsewhip', s:'Oxybelis aeneus', img:'oxybelis_aeneus.jpg', v:0, is:'both', d:'Paper-thin green vine snake that hunts by day.' },
+  { f:'colubridae', n:'Calico snake', l:'False coral', s:'Oxyrhopus petola', img:'oxyrhopus_petola.jpg', v:0, is:'both', d:'Red, black and yellow-banded mimic with a mouse-catching diet.' },
+  { f:'colubridae', n:'Ratonel', l:'—', s:'Pseudoboa neuwiedii', img:null, v:0, is:'both', d:'A glossy rat-eater — a farmer’s quiet friend.' },
+  { f:'colubridae', n:'Dos cocorite', l:'Cutlah', s:'Pseustes poecilonotus polylepis', img:'phrynonax_polylepis.jpg', v:0, is:'trinidad', d:'A canopy bird-hunter; a close cousin of the cribos.' },
+  { f:'colubridae', n:'Yellow-bellied puffing snake', l:'—', s:'Pseustes sulphureus', img:'pseustes_sulphureus.jpg', v:0, is:'trinidad', d:'Defensive display: raises and “puffs” the front of its body.' },
+  { f:'colubridae', n:'Clouded snake', l:'Cashew snake', s:'Sibon nebulata nebulata', img:'silky.jpg', v:0, is:'both', d:'Slender and gentle; loves cocoa and coffee estates.' },
+  { f:'colubridae', n:'Checkerbelly', l:'Chekerbelly', s:'Siphlophis cervinus', img:'siphlophis_cervinus.jpg', v:0, is:'trinidad', d:'A beautiful, secretive forest liana-snake.' },
+  { f:'colubridae', n:'Tigre', l:'Tigro', s:'Spilotes pullatus', img:'spilotes_pullatus.jpg', v:0, is:'both', d:'Big, bold and black-and-yellow — chicken snakes, often in rafters.' },
+  { f:'colubridae', n:'Black-headed snake', l:'—', s:'Tantilla melanocephala', img:null, v:0, is:'both', d:'A small burrowing centipede-eater with a dark cap.' },
+  { f:'colubridae', n:'Striped swamp snake', l:'—', s:'Thamnodynastes ramonriveroi', img:null, v:0, is:'trinidad', d:'A rarely seen, mildly venomous swamp specialist.' },
+  { f:'colubridae', n:'Mapepire de fe', l:'—', s:'Tripanurgos compressus', img:'siphlophis_compressus.jpg', v:0, is:'trinidad', d:'“Fire mapepire” — red-and-white, mildly venomous to small prey.' },
+  // Elapidae
+  { f:'elapidae', n:'Common coral snake', l:'Coral', s:'Micrurus circinalis', img:'micrurus_circinalis.jpg', v:1, is:'trinidad', d:'A true coral snake with fixed front fangs. Bites are rare but serious.' },
+  { f:'elapidae', n:'Large coral snake', l:'Coral', s:'Micrurus lemniscatus diutius', img:'coral.jpg', v:1, is:'trinidad', d:'The larger of Trinidad’s two coral snakes; never one to handle.' },
+  // Viperidae
+  { f:'viperidae', n:'Fer-de-lance', l:'Mapepire balsain', s:'Bothrops atrox', img:'bothrops.jpg', v:1, is:'trinidad', d:'The snake everyone warns you about — shy, well-camouflaged, rarely aggressive unless startled.' },
+  { f:'viperidae', n:'Bushmaster', l:'Mapepire z’ancana', s:'Lachesis muta', img:'lachesis.jpg', v:1, is:'trinidad', d:'The largest venomous snake in the Americas, high in Northern Range forest.' },
+  // Leptotyphlopidae
+  { f:'scolecophidia', n:'Ground puppy', l:'—', s:'Leptotyphlops albifrons', img:null, v:0, is:'trinidad', d:'Thread-thin; lives among ants and termites.' },
+  // Typhlopidae
+  { f:'scolecophidia', n:'Yellow-headed ground puppy', l:'—', s:'Helminthophis flavoterminatus', img:null, v:0, is:'trinidad', d:'A tiny, rarely seen burrowing snake.' },
+  { f:'scolecophidia', n:'Burrowing snake', l:'—', s:'Amerotyphlops brongersmianus', img:null, v:0, is:'trinidad', d:'A small worm snake of deep, moist soils.' },
+  { f:'scolecophidia', n:'Trinidad burrowing snake', l:'Ground puppy', s:'Amerotyphlops trinitatus', img:'amerotyphlops_trinitatus.jpg', v:0, is:'both', d:'A shiny, worm-like burrower of loose soil.' }
+];
+
+const venomSet = new Set();
+const famCount = {};
+SNAKES.forEach(x => { famCount[x.f] = (famCount[x.f]||0) + 1; if (x.v) venomSet.add(x.f); });
+const total = SNAKES.length;
+const venomTotal = SNAKES.filter(x => x.v).length;
+document.getElementById('spTotal').textContent = total + ' species recorded';
+document.getElementById('spVenom').textContent = venomTotal + ' venomous — all in Trinidad';
+const hStats = document.querySelectorAll('.stat-value');
+if (hStats[0]) hStats[0].textContent = total;
+if (hStats[1]) hStats[1].textContent = venomTotal;
+
+const badge = v => v ? '<span class="spec-badge badge-care">Venomous</span>' : '<span class="spec-badge badge-safe">Harmless</span>';
+const imgTag = (img, name, sci) => img
+  ? '<div class="spec-img"><img src="images/' + img + '" alt="' + name + ' (' + sci + ')" loading="lazy"></div>'
+  : '<div class="spec-img"><div class="spec-nophoto">🐍</div></div>';
+const iso = x => x === 'both'
+  ? '<i class="on">Trinidad</i><i class="on">Tobago</i>'
+  : (x === 'tobago' ? '<i class="on">Tobago</i>' : '<i class="on">Trinidad</i>');
+
+let html = '';
+for (const fam of FAMILIES) {
+  const items = SNAKES.filter(x => x.f === fam.id);
+  if (!items.length) continue;
+  html += '<div class="family"><h3>' + fam.name + ' <span class="fam-tag">' + fam.tag + '</span></h3><p>' + fam.note + '</p><div class="spec-grid">';
+  items.forEach(x => {
+    html += '<div class="spec">' + imgTag(x.img, x.n, x.s)
+      + '<div class="spec-body"><div class="spec-name"><h3>' + x.n + '</h3><span class="spec-local">' + x.l + '</span></div>'
+      + '<div class="spec-sci">' + x.s + '</div>'
+      + badge(x.v) + '<div class="spec-iso">' + iso(x.is) + '</div>'
+      + '<p>' + x.d + '</p></div></div>';
+  });
+  html += '</div></div>';
+}
+document.getElementById('gallery').innerHTML = html;
+</script>
 
 </body>
 </html>
