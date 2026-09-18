@@ -153,6 +153,27 @@
   .emerg-nums span { font-size: 1.35rem; font-weight: 600; color: var(--leaf-2); font-family: 'Fraunces', Georgia, serif; }
   .emerg-nums small { display: block; font-size: .72rem; font-weight: 500; color: #a8b2aa; letter-spacing: .02em; }
 
+  .treatment { padding: 5.5rem 0; background: linear-gradient(180deg, #fffdf8, #f6f3ea); }
+  .treat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.6rem; }
+  .treat-card { background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem 1.5rem; box-shadow: var(--shadow-sm); transition: transform .25s, box-shadow .25s, border-color .25s; }
+  .treat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: #fecaca; }
+  .treat-ico { font-size: 1.5rem; margin-bottom: .6rem; }
+  .treat-card h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: .4rem; color: var(--forest-950); }
+  .treat-card p { color: var(--muted); font-size: .88rem; }
+  .treat-donts { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.2rem; align-items: stretch; }
+  .dont { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.6rem; box-shadow: var(--shadow-sm); }
+  .dont h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: .8rem; color: var(--forest-950); }
+  .dont ul { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
+  .dont li { display: flex; gap: .6rem; align-items: flex-start; font-size: .9rem; color: #4d574f; }
+  .dont li span { flex-shrink: 0; }
+  .dont.refs p { color: var(--muted); font-size: .88rem; margin-bottom: 1rem; }
+  .dont.refs .emerg-nums { justify-content: flex-start; gap: 1.4rem; }
+  .dont.refs .emerg-nums span { font-size: 1.2rem; color: #b91c1c; }
+  @media (max-width: 800px) {
+    .treat-grid { grid-template-columns: 1fr; }
+    .treat-donts { grid-template-columns: 1fr; }
+  }
+
   .cta { padding: 5rem 0; text-align: center; }
   .cta h2 { font-size: 2.2rem; font-weight: 500; letter-spacing: -.02em; margin-bottom: .7rem; color: var(--forest-950); }
   .cta p { color: var(--muted); margin-bottom: 1.9rem; }
@@ -193,6 +214,13 @@ section[id] { scroll-margin-top: 76px; }
   .modal-bite.watch { background: linear-gradient(135deg,#fef2f2,#fde7e7); border: 1px solid #fecaca; color: #7f1d1d; }
   .modal-bite h3 { display: flex; align-items: center; gap: .45rem; }
   .modal-bite a { text-decoration: underline; }
+  .treat-steps { display: grid; grid-template-columns: 1fr 1fr; gap: .35rem .8rem; margin-top: .8rem; padding-top: .7rem; border-top: 1px dashed currentColor; opacity: .92; }
+  .treat-steps div { display: flex; align-items: center; gap: .45rem; font-size: .78rem; color: inherit; }
+  .treat-steps b { display: inline-flex; align-items: center; justify-content: center; width: 18px; height: 18px; border-radius: 50%; font-size: .66rem; flex-shrink: 0; background: rgba(0,0,0,.12); }
+  .treat-link { margin-top: .55rem; font-size: .78rem; opacity: .85; }
+  @media (max-width: 480px) {
+    .treat-steps { grid-template-columns: 1fr; }
+  }
   .spec-clickable { cursor: pointer; }
   .spec-link { position: relative; }
   .spec-click-hint { position:absolute; top:10px; left:10px; z-index:2; background: rgba(7,20,11,.68); color:#fff; font-size:.66rem; font-weight:700; padding:.24rem .6rem; border-radius:999px; opacity:0; transition:opacity .2s; pointer-events:none; letter-spacing:.03em; backdrop-filter: blur(4px); }
@@ -275,6 +303,7 @@ section[id] { scroll-margin-top: 76px; }
       <a href="#species">Local snakes</a>
       <a href="#habitat">Where they live</a>
       <a href="#safety">Stay safe</a>
+      <a href="#treatment">Bite first aid</a>
     </div>
     <a class="nav-cta" href="#cta">Learn more</a>
   </div>
@@ -478,6 +507,69 @@ section[id] { scroll-margin-top: 76px; }
         <span>990<small>Fire</small></span>
         <span>811<small>Ambulance</small></span>
         <span>800<small>Antivenom via P.O.S. General Hospital</small></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="treatment" id="treatment">
+  <div class="container">
+    <div class="section-title">
+      <span class="section-eyebrow">Bite first aid</span>
+      <h2>If someone is bitten by a snake</h2>
+      <p>Act fast, stay calm and get to a hospital. Here is exactly what to do — and what to avoid.</p>
+    </div>
+    <div class="treat-grid">
+      <div class="treat-card">
+        <div class="treat-ico">1️⃣</div>
+        <h3>Move away from the snake</h3>
+        <p>Get the person out of striking range so no one else is bitten. Do not chase, capture or kill the snake.</p>
+      </div>
+      <div class="treat-card">
+        <div class="treat-ico">2️⃣</div>
+        <h3>Call for help</h3>
+        <p>Dial <strong>811</strong> (ambulance) or <strong>999</strong> immediately. Tell them a snake bite has happened and where you are.</p>
+      </div>
+      <div class="treat-card">
+        <div class="treat-ico">3️⃣</div>
+        <h3>Keep them calm and still</h3>
+        <p>Panic spreads venom faster. Have the person lie down and keep the bitten limb still and below heart level.</p>
+      </div>
+      <div class="treat-card">
+        <div class="treat-ico">4️⃣</div>
+        <h3>Remove tight items</h3>
+        <p>Take off rings, bracelets and tight clothing near the bite now — swelling will make them impossible to remove later.</p>
+      </div>
+      <div class="treat-card">
+        <div class="treat-ico">5️⃣</div>
+        <h3>Get to hospital fast</h3>
+        <p>The sooner antivenom is given, the better. If you can, call ahead so the emergency room is ready.</p>
+      </div>
+      <div class="treat-card">
+        <div class="treat-ico">6️⃣</div>
+        <h3>Note what the snake looked like</h3>
+        <p>Colour, size and pattern help doctors choose antivenom — but only if you can describe it safely from a distance. No photos needed.</p>
+      </div>
+    </div>
+    <div class="treat-donts">
+      <div class="dont">
+        <h3>🚫 Don't do these</h3>
+        <ul>
+          <li><span>✂️</span>Don't cut the wound or try to suck the venom out.</li>
+          <li><span>🩸</span>Don't apply a tight tourniquet — it traps venom in one limb.</li>
+          <li><span>🧊</span>Don't ice the bite or soak it in anything.</li>
+          <li><span>☕</span>Don't offer alcohol, caffeine or any "snakebite drink".</li>
+          <li><span>🔦</span>Don't use electric shock or snakebite gadgets — they don't work.</li>
+        </ul>
+      </div>
+      <div class="dont refs">
+        <h3>🏥 Where antivenom is available</h3>
+        <p>Antivenom for Trinidad's snakes is held at <strong>Port of Spain General Hospital</strong>. Emergency dispatch can advise the nearest treatment centre.</p>
+        <div class="emerg-nums">
+          <span>999<small>Police</small></span>
+          <span>990<small>Fire</small></span>
+          <span>811<small>Ambulance</small></span>
+        </div>
       </div>
     </div>
   </div>
@@ -1087,15 +1179,16 @@ function openModal(i) {
   const biteEl = document.getElementById('modalBite');
   const venomous = x.v;
   const mild = !!info.mild;
+  const treatSteps = '<div class="treat-steps"><div><b>1</b>Move away from the snake</div><div><b>2</b>Keep them calm and still</div><div><b>3</b>Remove rings, bracelets &amp; tight clothing</div><div><b>4</b>Get to a hospital immediately</div></div><p class="treat-link">Full bite first aid in the <a href="#treatment">Bite first aid</a> section.</p>';
   if (venomous) {
     biteEl.className = 'modal-bite watch';
-    biteEl.innerHTML = '<h3><span>⚠️</span> If bitten — emergency</h3><p>' + escapeHtml(info.bite || 'Seek medical help immediately.') + '</p><p style="margin-top:.5rem;font-size:.82rem;">Emergency: <strong>999</strong> Police · <strong>811</strong> Ambulance · <strong>990</strong> Fire · Antivenom via <strong>Port of Spain General Hospital</strong>.</p>';
+    biteEl.innerHTML = '<h3><span>⚠️</span> If bitten — emergency</h3><p>' + escapeHtml(info.bite || 'Seek medical help immediately.') + '</p><p style="margin-top:.5rem;font-size:.82rem;">Emergency: <strong>999</strong> Police · <strong>811</strong> Ambulance · <strong>990</strong> Fire · Antivenom via <strong>Port of Spain General Hospital</strong>.</p>' + treatSteps;
   } else if (mild) {
     biteEl.className = 'modal-bite care';
-    biteEl.innerHTML = '<h3><span>⚠️</span> If bitten — stay calm</h3><p>' + escapeHtml(info.bite || 'Mildly venomous — usually no more than local pain and swelling. Clean the wound and see a doctor if symptoms develop.') + '</p><p style="margin-top:.5rem;font-size:.82rem;">If symptoms worsen, get to hospital: <strong>999</strong> Police · <strong>811</strong> Ambulance.</p>';
+    biteEl.innerHTML = '<h3><span>⚠️</span> If bitten — stay calm</h3><p>' + escapeHtml(info.bite || 'Mildly venomous — usually no more than local pain and swelling. Clean the wound and see a doctor if symptoms develop.') + '</p><p style="margin-top:.5rem;font-size:.82rem;">If symptoms worsen, get to hospital: <strong>999</strong> Police · <strong>811</strong> Ambulance.</p>' + treatSteps;
   } else {
     biteEl.className = 'modal-bite harmless';
-    biteEl.innerHTML = '<h3><span>✓</span> If bitten</h3><p>' + escapeHtml(info.bite || 'Harmless. Wash the wound and keep it clean.') + '</p>';
+    biteEl.innerHTML = '<h3><span>✓</span> If bitten</h3><p>' + escapeHtml(info.bite || 'Harmless. Wash the wound and keep it clean.') + '</p>' + '<p class="treat-link">See the <a href="#treatment">Bite first aid</a> section for full treatment steps.</p>';
   }
   modalEl.classList.add('open');
   document.body.style.overflow = 'hidden';
