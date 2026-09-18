@@ -3,106 +3,116 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GuestDB — Master Guest &amp; Relationship Management</title>
+<title>Serpentia TT — Snakes of Trinidad &amp; Tobago</title>
 <style>
   :root {
-    --navy: #0f172a;
-    --navy-2: #1e293b;
-    --brand: #2563eb;
-    --brand-2: #3b82f6;
-    --ink: #0f172a;
-    --muted: #64748b;
-    --bg: #ffffff;
-    --soft: #f8fafc;
-    --border: #e2e8f0;
-    --good: #059669;
+    --forest: #0c1a12;
+    --forest-2: #142618;
+    --leaf: #22c55e;
+    --leaf-2: #4ade80;
+    --sand: #fafaf5;
+    --ink: #17120e;
+    --border: #e7e5e4;
+    --panel: #ffffff;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Inter', 'Segoe UI', system-ui, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; }
-  a { color: var(--brand); text-decoration: none; }
+  body { font-family: 'Inter', 'Segoe UI', system-ui, Arial, sans-serif; color: var(--ink); background: var(--sand); line-height: 1.6; }
+  a { text-decoration: none; color: inherit; }
   .container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
 
-  /* Nav */
-  nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.88); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.5rem; max-width: 1080px; margin: 0 auto; }
   .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.05rem; }
-  .brand-mark { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg, var(--brand-2), var(--brand)); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(37,99,235,0.35); }
-  .nav-links { display: flex; gap: 1.5rem; font-size: 0.9rem; font-weight: 600; color: var(--muted); }
-  .nav-links a:hover { color: var(--ink); }
-  .nav-cta { background: var(--brand); color: #fff; padding: 0.5rem 1.1rem; border-radius: 8px; font-size: 0.88rem; font-weight: 600; }
-  .nav-cta:hover { background: #1d4ed8; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--leaf-2), var(--leaf)); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; }
+  .nav-links { display: flex; gap: 1.5rem; font-size: 0.9rem; font-weight: 600; color: #57534e; }
+  .nav-links a:hover { color: var(--leaf); }
+  .nav-cta { background: var(--forest); color: #fff; padding: 0.5rem 1.1rem; border-radius: 8px; font-size: 0.88rem; font-weight: 600; }
+  .nav-cta:hover { background: var(--leaf); }
 
-  /* Hero */
-  .hero { padding: 5.5rem 0 4rem; background: radial-gradient(900px 400px at 80% -10%, rgba(37,99,235,0.10), transparent 60%), linear-gradient(180deg, #f8fafc, #ffffff); }
+  .hero { padding: 5.5rem 0 4rem; background: radial-gradient(900px 420px at 85% -10%, rgba(34,197,94,0.16), transparent 60%), linear-gradient(180deg, #fafaf5, #ffffff); position: relative; overflow: hidden; }
+  .hero-snake { position: absolute; right: -1rem; bottom: -2.5rem; width: 420px; opacity: 0.09; pointer-events: none; }
   .hero .container { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; }
-  .hero-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: #eff6ff; color: var(--brand); border: 1px solid #dbeafe; border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 700; margin-bottom: 1.25rem; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 700; margin-bottom: 1.25rem; }
   .hero h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1rem; }
-  .hero h1 span { color: var(--brand); }
-  .hero p { color: var(--muted); font-size: 1.05rem; max-width: 30rem; margin-bottom: 1.75rem; }
+  .hero h1 span { color: #16a34a; }
+  .hero p { color: #78716c; font-size: 1.05rem; max-width: 30rem; margin-bottom: 1.75rem; }
   .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.95rem; }
-  .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 6px 16px rgba(37,99,235,0.3); }
-  .btn-primary:hover { background: #1d4ed8; }
+  .btn-primary { background: #16a34a; color: #fff; box-shadow: 0 6px 16px rgba(22,163,74,0.3); }
+  .btn-primary:hover { background: #15803d; }
   .btn-ghost { border: 1px solid var(--border); color: var(--ink); background: #fff; }
-  .btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+  .btn-ghost:hover { border-color: #16a34a; color: #16a34a; }
 
-  /* Hero mock card */
-  .hero-mock { background: #fff; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 50px rgba(15,23,42,0.10); padding: 1.5rem; }
-  .mock-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
-  .mock-title { font-weight: 800; font-size: 0.95rem; }
-  .mock-legend { display: flex; gap: 0.9rem; font-size: 0.72rem; font-weight: 600; color: var(--muted); }
-  .dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; margin-right: 0.3rem; }
-  .dot-blue { background: var(--brand); }
-  .dot-green { background: var(--good); }
-  .dot-gray { background: #cbd5e1; }
-  .mock-bar { display: flex; align-items: flex-end; gap: 1.2rem; height: 190px; padding-top: 0.5rem; }
-  .mock-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
-  .mock-groups { display: flex; align-items: flex-end; gap: 0.35rem; height: 170px; width: 100%; }
-  .mock-bar-seg { width: 100%; border-radius: 6px 6px 2px 2px; }
-  .mock-x { font-size: 0.78rem; font-weight: 700; color: var(--muted); }
+  .stat-card { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 50px rgba(20,38,24,0.10); padding: 1.5rem; }
+  .stat-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+  .stat-row:last-child { margin-bottom: 0; }
+  .stat-ico { width: 48px; height: 48px; border-radius: 12px; background: #f0fdf4; color: #16a34a; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .stat-value { font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em; }
+  .stat-label { font-size: 0.82rem; color: #78716c; }
+  .stat-local { font-size: 0.76rem; color: #a8a29e; font-style: italic; }
 
-  /* Logos strip */
-  .logos { padding: 2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--soft); }
-  .logos p { text-align: center; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--faint) ; color: #94a3b8; margin-bottom: 1rem; }
-  .logo-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; color: #94a3b8; font-weight: 800; font-size: 1rem; }
-  .logo-row span { opacity: 0.75; }
+  .facts { padding: 3rem 0; background: var(--forest); color: #d6d3d1; }
+  .facts-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; text-align: center; }
+  .fact-num { font-size: 1.35rem; font-weight: 800; color: var(--leaf-2); margin-bottom: 0.2rem; }
+  .fact-label { font-size: 0.85rem; color: #a8a29e; }
 
-  /* Features */
-  .features { padding: 5rem 0; }
+  .species { padding: 5rem 0; }
   .section-title { text-align: center; margin-bottom: 3rem; }
   .section-title h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.6rem; }
-  .section-title p { color: var(--muted); max-width: 34rem; margin: 0 auto; }
-  .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .feat { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; transition: box-shadow 0.2s, transform 0.2s; }
-  .feat:hover { box-shadow: 0 14px 34px rgba(15,23,42,0.08); transform: translateY(-3px); }
-  .feat-ico { width: 44px; height: 44px; border-radius: 11px; background: #eff6ff; color: var(--brand); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
-  .feat h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
-  .feat p { color: var(--muted); font-size: 0.9rem; }
+  .section-title p { color: #78716c; max-width: 36rem; margin: 0 auto; }
+  .spec-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .spec { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+  .spec:hover { box-shadow: 0 14px 34px rgba(12,26,18,0.10); transform: translateY(-3px); }
+  .spec-img { height: 120px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+  .spec-body { padding: 1.25rem; }
+  .spec-name { margin-bottom: 0.4rem; }
+  .spec-name h3 { font-size: 1.05rem; font-weight: 700; }
+  .spec-local { font-size: 0.78rem; color: #78716c; font-style: italic; }
+  .spec-badge { display: inline-block; margin-top: 0.4rem; font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 999px; }
+  .badge-safe { background: #f0fdf4; color: #15803d; }
+  .badge-care { background: #fef2f2; color: #991b1b; }
+  .badge-watch { background: #fffbeb; color: #b45309; }
+  .spec p { color: #78716c; font-size: 0.9rem; }
+  .spec-bg-a { background: linear-gradient(135deg,#ecfccb,#fef9c3); }
+  .spec-bg-b { background: linear-gradient(135deg,#fef3c7,#ffedd5); }
+  .spec-bg-c { background: linear-gradient(135deg,#dbeafe,#e0f2fe); }
+  .spec-bg-d { background: linear-gradient(135deg,#fce7f3,#fae8ff); }
+  .spec-bg-e { background: linear-gradient(135deg,#dcfce7,#d1fae5); }
+  .spec-bg-f { background: linear-gradient(135deg,#e2e8f0,#f1f5f9); }
 
-  /* How it works */
-  .how { padding: 5rem 0; background: var(--navy); color: #fff; }
-  .how .section-title h2 { color: #fff; }
-  .how .section-title p { color: #94a3b8; }
-  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  .step { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09); border-radius: 14px; padding: 1.75rem; }
-  .step-num { font-size: 0.8rem; font-weight: 800; color: var(--brand-2); letter-spacing: 0.06em; margin-bottom: 0.6rem; }
-  .step h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
-  .step p { color: #94a3b8; font-size: 0.9rem; }
+  .habitat { padding: 4.5rem 0; background: #f7f6f2; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .hab-full { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .hab-full h2 { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.7rem; }
+  .hab-full p { color: #78716c; margin-bottom: 1rem; }
+  .hab-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+  .hab-list li { display: flex; gap: 0.7rem; align-items: flex-start; font-size: 0.92rem; color: #57534e; }
+  .hab-list .tick { color: #16a34a; font-weight: 800; }
 
-  /* CTA */
+  .safety { padding: 5rem 0; background: var(--forest); color: #e7e5e4; }
+  .safety .section-title h2 { color: #fff; }
+  .safety .section-title p { color: #a8a29e; }
+  .safety-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .safety-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.10); border-radius: 14px; padding: 1.75rem; }
+  .safety-card h3 { font-size: 1.02rem; margin-bottom: 0.5rem; color: #fff; }
+  .safety-card p { color: #a8a29e; font-size: 0.9rem; }
+  .emerg { margin-top: 2rem; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; padding: 1.5rem; text-align: center; }
+  .emerg h3 { color: #fff; margin-bottom: 0.6rem; }
+  .emerg-nums { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .emerg-nums span { font-size: 1rem; font-weight: 700; color: var(--leaf-2); }
+  .emerg-nums small { display: block; font-size: 0.72rem; font-weight: 500; color: #a8a29e; }
+
   .cta { padding: 4.5rem 0; text-align: center; }
   .cta h2 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.7rem; }
-  .cta p { color: var(--muted); margin-bottom: 1.75rem; }
+  .cta p { color: #78716c; margin-bottom: 1.75rem; }
 
-  /* Footer */
-  footer { border-top: 1px solid var(--border); padding: 2rem 0; background: var(--soft); }
-  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--muted); }
-  .foot .brand { font-size: 0.95rem; }
+  footer { border-top: 1px solid var(--border); padding: 2rem 0; background: #fff; }
+  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: #78716c; }
 
   @media (max-width: 800px) {
-    .hero .container { grid-template-columns: 1fr; padding-top: 2rem; }
+    .hero .container, .hab-full { grid-template-columns: 1fr; padding-top: 2rem; }
     .hero h1 { font-size: 2rem; }
-    .feat-grid, .steps { grid-template-columns: 1fr; }
+    .facts-grid { grid-template-columns: 1fr 1fr; }
+    .spec-grid, .safety-grid { grid-template-columns: 1fr; }
     .nav-links { display: none; }
   }
 </style>
@@ -111,147 +121,199 @@
 
 <nav>
   <div class="nav-inner">
-    <div class="brand"><span class="brand-mark">GD</span> GuestDB</div>
+    <div class="brand"><span class="brand-mark">🐍</span> Serpentia TT</div>
     <div class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#how">How it works</a>
-      <a href="#cta">Contact</a>
+      <a href="#species">Local snakes</a>
+      <a href="#habitat">Where they live</a>
+      <a href="#safety">Stay safe</a>
     </div>
-    <a class="nav-cta" href="#cta">Get started</a>
+    <a class="nav-cta" href="#cta">Learn more</a>
   </div>
 </nav>
 
 <header class="hero">
+  <svg class="hero-snake" viewBox="0 0 200 200" fill="none" stroke="#16a34a" stroke-width="6" stroke-linecap="round">
+    <path d="M15 185 C 70 120, 40 60, 100 55 C 150 50, 130 15, 175 25"/>
+  </svg>
   <div class="container">
     <div>
-      <span class="hero-badge">● CRMs &amp; guest lists in one place</span>
-      <h1>Your guests. Your relationships. <span>Always in reach.</span></h1>
-      <p>GuestDB is a master database that keeps every contact, tier and validation in one elegant system — built for teams that care about who shows up.</p>
+      <span class="hero-badge">● Trinidad &amp; Tobago heritage</span>
+      <h1>Mapepires &amp; macajuels. <span>Right at home.</span></h1>
+      <p>From the Northern Range to the cocoa estates — get to know the snakes of Trinidad &amp; Tobago, their local names, and how to live alongside them.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#cta">Request access</a>
-        <a class="btn btn-ghost" href="#features">Explore features</a>
+        <a class="btn btn-primary" href="#species">Meet the local snakes</a>
+        <a class="btn btn-ghost" href="#habitat">Where they live</a>
       </div>
     </div>
-    <div class="hero-mock">
-      <div class="mock-head">
-        <span class="mock-title">Dashboard preview</span>
-        <div class="mock-legend">
-          <span><i class="dot dot-blue"></i>Validated</span>
-          <span><i class="dot dot-gray"></i>Overdue</span>
+    <div class="stat-card">
+      <div class="stat-row">
+        <div class="stat-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div class="stat-value">40+</div>
+          <div class="stat-label">Snake species recorded in T&amp;T</div>
         </div>
       </div>
-      <div class="mock-bar">
-        <div class="mock-col">
-          <div class="mock-groups">
-            <div class="mock-bar-seg" style="height:78%;background:var(--brand)"></div>
-            <div class="mock-bar-seg" style="height:22%;background:#cbd5e1"></div>
-          </div>
-          <span class="mock-x">Tier A</span>
+      <div class="stat-row">
+        <div class="stat-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="4.93 4.93 19.07 19.07"/></svg>
         </div>
-        <div class="mock-col">
-          <div class="mock-groups">
-            <div class="mock-bar-seg" style="height:100%;background:var(--good)"></div>
-          </div>
-          <span class="mock-x">Tier B</span>
+        <div>
+          <div class="stat-value">5</div>
+          <div class="stat-label">Venomous species to respect</div>
+          <div class="stat-local">The rest are harmless and protected.</div>
         </div>
-        <div class="mock-col">
-          <div class="mock-groups">
-            <div class="mock-bar-seg" style="height:88%;background:var(--good)"></div>
-          </div>
-          <span class="mock-x">Tier C</span>
+      </div>
+      <div class="stat-row">
+        <div class="stat-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v3"/><path d="M16 2v3"/><path d="M3 11h18"/><path d="M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/></svg>
+        </div>
+        <div>
+          <div class="stat-value">Northern Range</div>
+          <div class="stat-label">Best place to spot them wild</div>
+          <div class="stat-local">Bushmaster country: deep, wet &amp; cool.</div>
         </div>
       </div>
     </div>
   </div>
 </header>
 
-<section class="logos">
+<section class="facts" id="facts">
   <div class="container">
-    <p>Trusted by relationship-focused teams</p>
-    <div class="logo-row">
-      <span>◆ HAWTHORNE</span>
-      <span>▲ VERITAS</span>
-      <span>● NORTHMARK</span>
-      <span>■ KESTREL</span>
-      <span>✦ AURENNE</span>
+    <div class="facts-grid">
+      <div><div class="fact-num">Protected by law</div><div class="fact-label">Killing snakes is illegal in Trinidad &amp; Tobago</div></div>
+      <div><div class="fact-num">"Mapepire"</div><div class="fact-label">Local name for the venomous Fer-de-lance</div></div>
+      <div><div class="fact-num">Garden ally</div><div class="fact-label">Snakes control rats on farmland &amp; estates</div></div>
+      <div><div class="fact-num">No coral death</div><div class="fact-label">Fatal snakebites are extremely rare in T&amp;T</div></div>
     </div>
   </div>
 </section>
 
-<section class="features" id="features">
+<section class="species" id="species">
   <div class="container">
     <div class="section-title">
-      <h2>Everything you need to stay close</h2>
-      <p>From tier-based validation to event-ready guest lists, GuestDB handles the details so your team can focus on people.</p>
+      <h2>The snakes you'll hear about</h2>
+      <p>Six species Trinidadians know by name — and how to read them at a glance.</p>
     </div>
-    <div class="feat-grid">
-      <div class="feat">
-        <div class="feat-ico">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <div class="spec-grid">
+      <div class="spec">
+        <div class="spec-img spec-bg-a">🐍</div>
+        <div class="spec-body">
+          <div class="spec-name"><h3>Fer-de-lance</h3><span class="spec-local">"Mapepire"</span></div>
+          <span class="spec-badge badge-care">Venomous — give space</span>
+          <p>The lancehead everyone warns you about. Shy, well-camouflaged pit viper; rarely aggressive unless startled.</p>
         </div>
-        <h3>Master contact directory</h3>
-        <p>One source of truth for every guest, partner and contact — with ownership, position and company detail.</p>
       </div>
-      <div class="feat">
-        <div class="feat-ico">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <div class="spec">
+        <div class="spec-img spec-bg-b">🐍</div>
+        <div class="spec-body">
+          <div class="spec-name"><h3>Bushmaster</h3><span class="spec-local">"Mapepire Z'Ancana"</span></div>
+          <span class="spec-badge badge-care">Venomous — rare</span>
+          <p>The largest venomous snake in the Americas, found high in the Northern Range forests. Deeply reclusive.</p>
         </div>
-        <h3>Tier-based validation</h3>
-        <p>Strategic tiers with rolling validation windows, overdue alerts and a live quality dashboard.</p>
       </div>
-      <div class="feat">
-        <div class="feat-ico">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <div class="spec">
+        <div class="spec-img spec-bg-c">🐍</div>
+        <div class="spec-body">
+          <div class="spec-name"><h3>Boa constrictor</h3><span class="spec-local">"Macajuel"</span></div>
+          <span class="spec-badge badge-safe">Harmless constrictor</span>
+          <p>Trinidad's gentle giant. Non-venomous and a superb natural pest controller near homes and farms.</p>
         </div>
-        <h3>Event guest lists</h3>
-        <p>Build and export clean rosters for any event in seconds — filter by tier, company or guest type.</p>
       </div>
-      <div class="feat">
-        <div class="feat-ico">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <div class="spec">
+        <div class="spec-img spec-bg-d">🐍</div>
+        <div class="spec-body">
+          <div class="spec-name"><h3>Coral snake</h3><span class="spec-local">Small, banded</span></div>
+          <span class="spec-badge badge-care">Venomous</span>
+          <p>Brilliant red, yellow and black bands. Non-aggressive and rarely encountered — admire, don't touch.</p>
         </div>
-        <h3>Duplicate protection</h3>
-        <p>Automatic detection of repeated emails keeps your list clean and your outreach credible.</p>
       </div>
-      <div class="feat">
-        <div class="feat-ico">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+      <div class="spec">
+        <div class="spec-img spec-bg-e">🐍</div>
+        <div class="spec-body">
+          <div class="spec-name"><h3>Tree boa</h3><span class="spec-local">"Corde violet"</span></div>
+          <span class="spec-badge badge-safe">Harmless</span>
+          <p>A graceful arboreal boa often seen draped over forest branches. Excellent climber, feeds on birds &amp; rodents.</p>
         </div>
-        <h3>Owner accountability</h3>
-        <p>Every contact has an owner. Track completion and overdue metrics per relationship manager.</p>
       </div>
-      <div class="feat">
-        <div class="feat-ico">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <div class="spec">
+        <div class="spec-img spec-bg-f">🐍</div>
+        <div class="spec-body">
+          <div class="spec-name"><h3>Silky snake</h3><span class="spec-local">"Cashew snake"</span></div>
+          <span class="spec-badge badge-safe">Harmless</span>
+          <p>A slim, gentle snake that loves cocoa and coffee estates. Eats soft-bodied prey and minds its business.</p>
         </div>
-        <h3>Excel &amp; CSV exports</h3>
-        <p>Stylish, ready-to-share spreadsheets for stakeholders — no copy-paste, no cleanup.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="how" id="how">
+<section class="habitat" id="habitat">
+  <div class="container">
+    <div class="hab-full">
+      <div>
+        <h2>Where they call home</h2>
+        <p>Two islands, one remarkable mix of habitats — and every one has its snakes.</p>
+        <ul class="hab-list">
+          <li><span class="tick">✓</span><span><strong>Northern Range</strong> — wet montane forest; look for boas, the bushmaster and tree boas.</span></li>
+          <li><span class="tick">✓</span><span><strong>Cocoa &amp; coffee estates</strong> — silky snakes and fer-de-lances hunting rats on the ridges.</span></li>
+          <li><span class="tick">✓</span><span><strong>Lowland &amp; savanna</strong> — macajuels and garden snakes around villages and fields.</span></li>
+          <li><span class="tick">✓</span><span><strong>Tobago's forests</strong> — quieter, drier; a handful of the same familiar species.</span></li>
+        </ul>
+      </div>
+      <div class="stat-card">
+        <div class="stat-row">
+          <div class="stat-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          </div>
+          <div>
+            <div class="stat-value">4,828 km²</div>
+            <div class="stat-label">Combined landmass of Trinidad &amp; Tobago</div>
+          </div>
+        </div>
+        <div class="stat-row">
+          <div class="stat-ico">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 2-1.5 3-3 3h-2a2 2 0 0 0 0 4 2 2 0 0 1-2 2H9a4 4 0 0 1-4-4c0-2 1-3 2-3h1V9a4 4 0 0 0-4-4H3"/></svg>
+          </div>
+          <div>
+            <div class="stat-value">Same forest</div>
+            <div class="stat-label">Shared with howler monkeys, agouti &amp; quenk</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="safety" id="safety">
   <div class="container">
     <div class="section-title">
-      <h2>How it works</h2>
-      <p>From first contact to event day — a simple rhythm your team will actually keep.</p>
+      <h2>Living beside snakes, safely</h2>
+      <p>A few simple habits keep you, your family and the snakes safe.</p>
     </div>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">STEP 01</div>
-        <h3>Capture</h3>
-        <p>Log every guest and contact once, with tier and owner assigned from day one.</p>
+    <div class="safety-grid">
+      <div class="safety-card">
+        <h3>Do not kill</h3>
+        <p>All snakes are protected by the Conservation of Wildlife Act in T&amp;T. Killing one is against the law.</p>
       </div>
-      <div class="step">
-        <div class="step-num">STEP 02</div>
-        <h3>Validate</h3>
-        <p>Stay on top of rolling validation windows with overdue alerts and KPIs that keep you honest.</p>
+      <div class="safety-card">
+        <h3>Respect the Mapepire</h3>
+        <p>Back away slowly and give it space. It will always move off on its own — attacks are almost always provoked.</p>
       </div>
-      <div class="step">
-        <div class="step-num">STEP 03</div>
-        <h3>Invite &amp; export</h3>
-        <p>Build event rosters and share clean Excel exports with anyone who needs them.</p>
+      <div class="safety-card">
+        <h3>Call for relocation</h3>
+        <p>For a snake in your yard, contact the Wildlife Section or an experienced snake relocator — never handle one yourself.</p>
+      </div>
+    </div>
+    <div class="emerg">
+      <h3>If someone is bitten</h3>
+      <p style="color:#a8a29e;font-size:0.9rem;margin-bottom:0.6rem;">Keep the person calm and still. Do not cut, suck or apply a tight tourniquet. Get to a hospital immediately.</p>
+      <div class="emerg-nums">
+        <span>999<small>Police</small></span>
+        <span>990<small>Fire</small></span>
+        <span>811<small>Ambulance</small></span>
+        <span>800-<small>Antivenom via P.O.S. General Hospital</small></span>
       </div>
     </div>
   </div>
@@ -259,16 +321,16 @@
 
 <section class="cta" id="cta">
   <div class="container">
-    <h2>Ready to put your guest list to work?</h2>
-    <p>Get in touch to set your team up on GuestDB.</p>
-    <a class="btn btn-primary" href="mailto:hello@guestdb.local?subject=GuestDB%20access%20request">hello@guestdb.local</a>
+    <h2>Curious about our island snakes?</h2>
+    <p>Good conservation starts with good information.</p>
+    <a class="btn btn-primary" href="https://ttfnc.org" target="_blank">Visit the Field Naturalists' Club</a>
   </div>
 </section>
 
 <footer>
   <div class="container foot">
-    <div class="brand"><span class="brand-mark">GD</span> GuestDB</div>
-    <span>© 2026 GuestDB. All rights reserved.</span>
+    <div class="brand"><span class="brand-mark">🐍</span> Serpentia TT</div>
+    <span>© 2026 Serpentia TT. A celebration of local snakes.</span>
   </div>
 </footer>
 
