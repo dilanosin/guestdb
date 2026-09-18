@@ -157,6 +157,40 @@ footer { border-top: 1px solid var(--border); padding: 2rem 0; background: #fff;
     .modal-hero { height: 220px; }
   }
 
+  .finder { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; margin-bottom: 2.4rem; box-shadow: 0 10px 30px rgba(20,38,24,0.06); }
+  .finder-search { display: flex; align-items: center; gap: .65rem; background: #f5f5f4; border: 1px solid var(--border); border-radius: 12px; padding: .2rem .2rem .2rem .9rem; transition: border-color .2s, box-shadow .2s; }
+  .finder-search:focus-within { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.15); background: #fff; }
+  .finder-search svg { color: #a8a29e; flex-shrink: 0; }
+  .finder-search input { flex: 1; border: none; outline: none; background: transparent; font-size: 1rem; padding: .8rem 0; color: var(--ink); font-family: inherit; }
+  .finder-clear { border: none; background: #e7e5e4; color: #57534e; width: 32px; height: 32px; border-radius: 8px; cursor: pointer; font-size: .85rem; display: none; align-items: center; justify-content: center; flex-shrink: 0; }
+  .finder-clear.show { display: inline-flex; }
+  .finder-clear:hover { background: #d6d3d1; }
+  .finder-result { margin-top: .6rem; font-size: .82rem; color: #a8a29e; }
+  .identify { margin-top: 1.1rem; border-top: 1px dashed var(--border); padding-top: 1.1rem; }
+  .identify summary { cursor: pointer; font-weight: 700; font-size: .95rem; color: var(--ink); list-style: none; display: inline-flex; align-items: center; gap: .4rem; }
+  .identify summary::-webkit-details-marker { display: none; }
+  .identify-toggle { margin-left: .15rem; transition: transform .2s; font-size: .7rem; color: #16a34a; }
+  details[open] .identify-toggle { transform: rotate(180deg); }
+  .identify-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1.1rem; }
+  .identify-grid label span { display: block; font-size: .74rem; font-weight: 700; color: #78716c; margin-bottom: .35rem; text-transform: uppercase; letter-spacing: .04em; }
+  .identify-grid select { width: 100%; padding: .65rem .7rem; border: 1px solid var(--border); border-radius: 10px; background: #fff; font-size: .9rem; font-family: inherit; color: var(--ink); outline: none; cursor: pointer; }
+  .identify-grid select:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.15); }
+  .identify-actions { display: flex; align-items: center; gap: 1rem; margin-top: 1.2rem; flex-wrap: wrap; }
+  .identify-note { font-size: .8rem; color: #a8a29e; }
+  .identify-results { margin-top: 1.4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .ir-card { background: #f7f6f2; border: 1px solid var(--border); border-radius: 12px; padding: .9rem 1rem; cursor: pointer; transition: box-shadow .2s, transform .2s, border-color .2s; }
+  .ir-card:hover { box-shadow: 0 10px 24px rgba(12,26,18,.10); transform: translateY(-2px); border-color: #bbf7d0; }
+  .ir-card h4 { font-size: .95rem; font-weight: 700; margin-bottom: .1rem; }
+  .ir-card .ir-sci { font-size: .75rem; color: #16a34a; font-style: italic; font-weight: 600; }
+  .ir-match { margin-top: .5rem; font-size: .72rem; font-weight: 700; color: #78716c; }
+  .ir-match b { color: #15803d; }
+  .ir-none { grid-column: 1 / -1; text-align: center; color: #a8a29e; font-size: .9rem; padding: 1rem 0; }
+  .match-how { font-size: .72rem; color: #a8a29e; margin-top: .4rem; line-height: 1.4; }
+  @media (max-width: 800px) {
+    .identify-grid { grid-template-columns: 1fr 1fr; }
+    .identify-results { grid-template-columns: 1fr; }
+  }
+
   @media (max-width: 800px) {
     .hero .container, .hab-full { grid-template-columns: 1fr; padding-top: 2rem; }
     .hero h1 { font-size: 2rem; }
@@ -244,6 +278,60 @@ footer { border-top: 1px solid var(--border); padding: 2rem 0; background: #fff;
     <div class="section-title">
       <h2>The snakes of Trinidad &amp; Tobago</h2>
       <p>The complete checklist — every species recorded on the two islands, by name, family and where it lives.</p>
+    </div>
+    <div class="finder" id="finder">
+      <div class="finder-search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="searchInput" type="search" placeholder="Search a snake — name, local name or keywords…" autocomplete="off">
+        <button id="searchClear" class="finder-clear" title="Clear" aria-label="Clear search">✕</button>
+      </div>
+      <p class="finder-result" id="finderResult"></p>
+      <details class="identify" id="identifyBox">
+        <summary>🐾 Don't know the snake? Identify it by appearance <span class="identify-toggle">▼</span></summary>
+        <div class="identify-grid">
+          <label><span>About how big?</span>
+            <select id="idSize">
+              <option value="">Not sure</option>
+              <option value="tiny">Very small — like a worm (&lt;30&nbsp;cm)</option>
+              <option value="small">Small — up to a metre</option>
+              <option value="medium">Medium — 1–1.5&nbsp;m</option>
+              <option value="large">Large — 2&nbsp;m or more</option>
+              <option value="huge">Huge — like an anaconda&nbsp;(2.5&nbsp;m+)</option>
+            </select>
+          </label>
+          <label><span>Colour pattern?</span>
+            <select id="idPatt">
+              <option value="">Not sure</option>
+              <option value="rings">Full rings / coral-like banded</option>
+              <option value="bands">Banded or blotched</option>
+              <option value="stripes">Striped along the body</option>
+              <option value="plain">Plain / uniform colour</option>
+            </select>
+          </label>
+          <label><span>Where did you see it?</span>
+            <select id="idSpot">
+              <option value="">Not sure</option>
+              <option value="ground">On the ground</option>
+              <option value="trees">In trees / up high</option>
+              <option value="water">In or near water</option>
+              <option value="building">In a building / yard</option>
+              <option value="digging">In soil / under a stone</option>
+            </select>
+          </label>
+          <label><span>Which island?</span>
+            <select id="idIsland">
+              <option value="">Either / not sure</option>
+              <option value="trinidad">Trinidad</option>
+              <option value="tobago">Tobago</option>
+            </select>
+          </label>
+        </div>
+        <div class="identify-actions">
+          <button class="btn btn-primary" id="idBtn">Show possible matches</button>
+          <span class="identify-note">Answer a few — the tool scores all 47 species.</span>
+        </div>
+        <div id="idResults" class="identify-results"></div>
+      </details>
     </div>
     <div class="spec-count">
       <span id="spTotal">…</span>
@@ -813,6 +901,59 @@ const INFO = {
   }
 };
 
+const ID = {
+  // size: tiny(<30) small(<80) medium(<140) large(<200) huge(>200)
+  // patt: bands, stripes, spots, plain, rings
+  // spot: ground, trees, water, building, digging
+  'Boa constrictor constrictor':      { size:'large',  patt:'spots', spot:'ground', col:['brown','tan','dark'], kw:'macajuel rat catcher' },
+  'Corallus ruschenbergerii':         { size:'large',  patt:'spots', spot:'trees',  col:['brown','grey'], kw:'cascabel dormillon tree boa night' },
+  'Epicrates maurus':                 { size:'large',  patt:'spots', spot:'ground', col:['dark','brown','grey'], kw:'couleuvre rainbow boa shiny' },
+  'Eunectes murinus':                 { size:'huge',   patt:'spots', spot:'water',  col:['green','black','olive'], kw:'huille anaconda river swamp slow' },
+  'Anilius scytale':                  { size:'small',  patt:'bands', spot:'digging', col:['red','black'], kw:'rouleau burrowing false coral rings' },
+  'Atractus trilineatus':             { size:'tiny',   patt:'stripes', spot:'digging', col:['brown','grey'], kw:'three-lined worm ground forest' },
+  'Atractus univittatus':             { size:'tiny',   patt:'stripes', spot:'digging', col:['brown'], kw:'one-lined tobago worm' },
+  'Chironius carinatus':              { size:'large',  patt:'plain', spot:'trees',  col:['green','olive'], kw:'machete savane ridge fast day' },
+  'Chironius multiventris':           { size:'large',  patt:'plain', spot:'trees',  col:['green','olive'], kw:'long-tailed machete canopy' },
+  'Chironius scurrulus':              { size:'large',  patt:'plain', spot:'trees',  col:['green','olive','brown'], kw:'smooth machete savane' },
+  'Clelia clelia':                    { size:'large',  patt:'plain', spot:'ground', col:['dark','black','white','grey'], kw:'mussurana black cribo snake hunter' },
+  'Dipsas variegata trinitatis':      { size:'small',  patt:'bands', spot:'trees',  col:['brown','light'], kw:'snail-eating snail slug' },
+  'Drymarchon corais corais':         { size:'huge',   patt:'plain', spot:'ground', col:['dark','brown','yellow'], kw:'cribo yellow-tailed big fast' },
+  'Erythrolamprus aesculapii':        { size:'small',  patt:'bands', spot:'ground', col:['red','black'], kw:'false coral mimic rings' },
+  'Erythrolamprus bizona':            { size:'small',  patt:'bands', spot:'ground', col:['red','black','white'], kw:'false coral mimic bands' },
+  'Erythrolamprus ocellatus':         { size:'small',  patt:'bands', spot:'ground', col:['red','black','white','pink'], kw:'tobago false coral red snake' },
+  'Helicops angulatus':               { size:'small',  patt:'stripes', spot:'water', col:['brown','olive','dark'], kw:'water mapepire fish stream pond keeled' },
+  'Hydrops triangularis':             { size:'small',  patt:'spots', spot:'water',  col:['red','black','grey'], kw:'water coral eel swamp triangle' },
+  'Imantodes cenchoa':                { size:'medium', patt:'plain', spot:'trees',  col:['brown','light','cream'], kw:'fiddle-string thin slender corde violon night' },
+  'Leptodeira annulata':              { size:'small',  patt:'spots', spot:'trees',  col:['brown','cream','tan'], kw:'cat-eyed night frog false mapepire' },
+  'Leptophis ahaetulla coeruleodorsus':{ size:'medium', patt:'plain', spot:'trees', col:['green'], kw:'lora parrot snake cocoa canopy' },
+  'Leptophis stimsoni':               { size:'medium', patt:'plain', spot:'trees',  col:['green','grey'], kw:'grey lora parrot snake' },
+  'Erythrolamprus cobella':           { size:'small',  patt:'plain', spot:'water',  col:['dark','black','brown'], kw:'mangrove snake mapepire mangue swamp' },
+  'Erythrolamprus melanotus':         { size:'small',  patt:'stripes', spot:'ground', col:['brown','yellow','olive'], kw:'doctor snake beh belle chemin road toad' },
+  'Erythrolamprus zweifeli':          { size:'small',  patt:'bands', spot:'ground', col:['red','black','cream'], kw:'high woods coral mimic forest' },
+  'Mastigodryas boddaerti boddaerti': { size:'medium', patt:'plain', spot:'ground', col:['brown','olive'], kw:'tobago racer machete couesse day' },
+  'Mastigodryas boddaerti dunni':     { size:'medium', patt:'plain', spot:'ground', col:['brown','olive'], kw:'trinidad racer machete couesse day' },
+  'Ninia atrata':                     { size:'tiny',   patt:'plain', spot:'digging', col:['dark','red-brown'], kw:'red-nape ring-neck leaf litter worm' },
+  'Oxybelis aeneus':                  { size:'medium', patt:'plain', spot:'trees',  col:['green','brown','grey'], kw:'horsewhip vine thin whip branch day' },
+  'Oxyrhopus petola':                 { size:'small',  patt:'bands', spot:'ground', col:['red','black','yellow'], kw:'calico false coral bands mouse' },
+  'Pseudoboa neuwiedii':              { size:'medium', patt:'plain', spot:'ground', col:['red','brown','grey','white'], kw:'ratonel rat glossy smooth' },
+  'Pseustes poecilonotus polylepis':  { size:'large',  patt:'spots', spot:'trees',  col:['brown','green','dark'], kw:'dos cocorite cutlah bird canopy' },
+  'Pseustes sulphureus':              { size:'large',  patt:'plain', spot:'trees',  col:['yellow','grey','dark'], kw:'yellow-bellied puffing hiss bluff' },
+  'Sibon nebulata nebulata':          { size:'small',  patt:'spots', spot:'trees',  col:['brown','grey','cream'], kw:'clouded cashew snail slug cocoa' },
+  'Siphlophis cervinus':              { size:'small',  patt:'spots', spot:'trees',  col:['red','brown','black','white'], kw:'checkerbelly chequer forest liana' },
+  'Spilotes pullatus':                { size:'huge',   patt:'bands', spot:'building', col:['black','yellow'], kw:'tigre tigro chicken snake rafters rat attic' },
+  'Tantilla melanocephala':           { size:'tiny',   patt:'plain', spot:'digging', col:['brown','black'], kw:'black-headed centipede cap small' },
+  'Thamnodynastes ramonriveroi':      { size:'small',  patt:'stripes', spot:'water', col:['brown','grey','dark'], kw:'striped swamp marsh' },
+  'Tripanurgos compressus':           { size:'medium', patt:'plain', spot:'trees',  col:['red','white','pink'], kw:'mapepire de fe fire red white' },
+  'Micrurus circinalis':              { size:'small',  patt:'rings', spot:'ground', col:['red','black','yellow-cream'], kw:'coral venomous rings mimic' },
+  'Micrurus lemniscatus diutius':     { size:'medium', patt:'rings', spot:'ground', col:['red','black','yellow'], kw:'coral venomous rings large' },
+  'Bothrops atrox':                   { size:'large',  patt:'spots', spot:'ground', col:['brown','olive','grey'], kw:'fer-de-lance mapepire balsain venomous diamond pit viper' },
+  'Lachesis muta':                    { size:'huge',   patt:'spots', spot:'ground', col:['brown','orange','tan'], kw:'bushmaster mapepire z ancana venomous northern range big' },
+  'Leptotyphlops albifrons':          { size:'tiny',   patt:'plain', spot:'digging', col:['silver','brown','pink'], kw:'ground puppy thread blind ant termite worm' },
+  'Helminthophis flavoterminatus':    { size:'tiny',   patt:'plain', spot:'digging', col:['brown','yellow'], kw:'yellow-headed ground puppy blind rare' },
+  'Amerotyphlops brongersmianus':     { size:'tiny',   patt:'plain', spot:'digging', col:['brown','shiny'], kw:'burrowing worm blind soil' },
+  'Amerotyphlops trinitatus':         { size:'tiny',   patt:'plain', spot:'digging', col:['brown','shiny'], kw:'trinidad burrowing ground puppy worm blind' }
+};
+
 const venomSet = new Set();
 const famCount = {};
 SNAKES.forEach(x => { famCount[x.f] = (famCount[x.f]||0) + 1; if (x.v) venomSet.add(x.f); });
@@ -901,6 +1042,98 @@ document.getElementById('gallery').addEventListener('click', e => {
 document.getElementById('modalClose').addEventListener('click', closeModal);
 modalEl.addEventListener('click', e => { if (e.target === modalEl) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ---- Search + Identify ----
+const searchInput = document.getElementById('searchInput');
+const searchClear = document.getElementById('searchClear');
+const finderResult = document.getElementById('finderResult');
+const galleryEl = document.getElementById('gallery');
+
+const haystack = x => {
+  const id = ID[x.s] || {};
+  return (x.n + ' ' + x.s + ' ' + x.l + ' ' + x.d + ' ' + (INFO[x.s] ? INFO[x.s].more : '') + ' ' + (id.kw || ''))
+    .toLowerCase().replace(/[’‘]/g, "'");
+};
+const scoreTerm = (text, term) => {
+  const t = term.toLowerCase();
+  if (text.includes(t)) return 1;
+  return 0;
+};
+
+function doSearch() {
+  const q = searchInput.value.trim();
+  searchClear.classList.toggle('show', !!q);
+  let shown = 0;
+  SNAKES.forEach((x, i) => {
+    const card = galleryEl.querySelector('.spec-clickable[data-i="' + i + '"]');
+    if (!card) return;
+    let ok = true;
+    if (q) ok = q.toLowerCase().split(/\s+/).every(term => scoreTerm(haystack(x), term));
+    card.style.display = ok ? '' : 'none';
+    if (ok) shown++;
+  });
+  galleryEl.querySelectorAll('.family').forEach(fam => {
+    const vis = fam.querySelectorAll('.spec-clickable').length && [...fam.querySelectorAll('.spec-clickable')].some(c => c.style.display !== 'none');
+    fam.style.display = vis ? '' : 'none';
+  });
+  finderResult.textContent = q ? (shown + ' of ' + SNAKES.length + ' snake species match' + (shown ? ' — click any card for details.' : ' — try another word.')) : '';
+}
+searchInput.addEventListener('input', doSearch);
+searchClear.addEventListener('click', () => { searchInput.value = ''; doSearch(); searchInput.focus(); });
+
+// Identify tool
+const idSize = document.getElementById('idSize');
+const idPatt = document.getElementById('idPatt');
+const idSpot = document.getElementById('idSpot');
+const idIsland = document.getElementById('idIsland');
+const idBtn = document.getElementById('idBtn');
+const idResults = document.getElementById('idResults');
+
+const PATT_SYN = { rings:['rings','bands'], bands:['bands','spots'], stripes:['stripes'], plain:['plain'] };
+const SIZE_ORDER = { tiny:0, small:1, medium:2, large:3, huge:4 };
+
+function identify() {
+  const q = { size:idSize.value, patt:idPatt.value, spot:idSpot.value, island:idIsland.value };
+  const answered = Object.values(q).filter(Boolean).length;
+  if (!answered) {
+    idResults.innerHTML = '<div class="ir-none">Pick at least one thing you remember — the more clues, the better the match.</div>';
+    return;
+  }
+  const scored = SNAKES.map(x => {
+    const id = ID[x.s] || {};
+    let score = 0, why = [];
+    if (q.size) { if (id.size === q.size) { score += 3; why.push('size'); } else if (Math.abs(SIZE_ORDER[id.size] - SIZE_ORDER[q.size]) === 1) { score += 1; why.push('close size'); } }
+    if (q.patt) { if (PATT_SYN[q.patt].includes(id.patt)) { score += 3; why.push('pattern'); } else if (q.patt === 'rings' && id.patt === 'bands') { score += 2; why.push('similar pattern'); } }
+    if (q.spot) { if (id.spot === q.spot) { score += 3; why.push('location'); } else if ((q.spot === 'ground' && id.spot === 'building') || (q.spot === 'building' && id.spot === 'ground')) { score += 1; why.push('close location'); } }
+    if (q.island) { if (x.is === 'both' || x.is === q.island) score += 2; }
+    return { x, score, why };
+  }).sort((a, b) => b.score - a.score);
+
+  const top = scored.filter(s => s.score >= 3).slice(0, 6);
+  const maybe = scored.filter(s => s.score < 3 && s.score >= 1).slice(0, 3);
+  const list = top.length ? top : scored.filter(s => s.score >= 1).slice(0, 6);
+
+  if (!list.length) {
+    idResults.innerHTML = '<div class="ir-none">No close match — refine your answers or try searching above. If the snake was already gone, note that many harmless species look similar.</div>';
+    return;
+  }
+  let html = '';
+  list.forEach((s, i) => {
+    const x = s.x;
+    const idx = SNAKES.indexOf(x);
+    html += '<div class="ir-card" data-i="' + idx + '">'
+      + '<h4>' + x.n + '</h4><div class="ir-sci">' + x.s + '</div>'
+      + '<div class="ir-match"><b>' + (s.score >= 5 ? 'Strong match' : s.score >= 3 ? 'Likely match' : 'Possible match') + '</b> · ' + (s.why.join(', ')) + '</div>'
+      + '</div>';
+  });
+  if (top.length && maybe.length) {
+    html += '<div class="ir-none" style="text-align:left;font-size:.82rem;padding:.4rem 0;">Also worth checking: ' + maybe.map(m => m.x.n).join(', ') + '.</div>';
+  }
+  idResults.innerHTML = html;
+  idResults.querySelectorAll('.ir-card').forEach(card => card.addEventListener('click', () => openModal(parseInt(card.getAttribute('data-i'), 10))));
+}
+idBtn.addEventListener('click', identify);
+['idSize','idPatt','idSpot','idIsland'].forEach(id2 => document.getElementById(id2).addEventListener('change', identify));
 </script>
 
 </body>
