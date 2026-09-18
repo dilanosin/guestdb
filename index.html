@@ -159,25 +159,37 @@
   .emerg-nums span { font-size: 1.35rem; font-weight: 600; color: var(--leaf-2); font-family: 'Fraunces', Georgia, serif; }
   .emerg-nums small { display: block; font-size: .72rem; font-weight: 500; color: #a8b2aa; letter-spacing: .02em; }
 
-  .treatment { padding: 5.5rem 0; background: linear-gradient(180deg, #fffdf8, #f6f3ea); }
-  .treat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 1.6rem; }
-  .treat-card { background: var(--cream); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem 1.5rem; box-shadow: var(--shadow-sm); transition: transform .25s, box-shadow .25s, border-color .25s; }
-  .treat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: #fecaca; }
-  .treat-ico { font-size: 1.5rem; margin-bottom: .6rem; }
-  .treat-card h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: .4rem; color: var(--forest-950); }
-  .treat-card p { color: var(--muted); font-size: .88rem; }
-  .treat-donts { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.2rem; align-items: stretch; }
-  .dont { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.6rem; box-shadow: var(--shadow-sm); }
-  .dont h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: .8rem; color: var(--forest-950); }
-  .dont ul { list-style: none; display: flex; flex-direction: column; gap: .7rem; }
-  .dont li { display: flex; gap: .6rem; align-items: flex-start; font-size: .9rem; color: #4d574f; }
-  .dont li span { flex-shrink: 0; }
+  .treatment { padding: 5.5rem 0; background: #f4f1e9; }
+  .treatment .section-title p { font-size: .95rem; }
+  .treat-protocol { background: var(--cream); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow-md); overflow: hidden; margin-bottom: 1.6rem; }
+  .tp-head { display: flex; align-items: center; gap: 1rem; padding: 1.4rem 1.8rem; background: linear-gradient(135deg, #0c1a12, #14351f); color: #fff; }
+  .tp-badge { font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #0c1a12; background: var(--leaf-2); padding: .3rem .7rem; border-radius: 999px; flex-shrink: 0; }
+  .tp-head h3 { font-size: 1.2rem; font-weight: 600; color: #fff; margin-bottom: .15rem; }
+  .tp-sub { font-size: .85rem; color: #a8b2aa; }
+  .tp-list { list-style: none; padding: .6rem 1.8rem 1.4rem; }
+  .tp-list li { display: flex; gap: 1.1rem; padding: 1.05rem 0; border-bottom: 1px solid var(--border); }
+  .tp-list li:last-child { border-bottom: none; }
+  .tp-num { font-family: 'Fraunces', Georgia, serif; font-size: 1.15rem; font-weight: 600; color: #16a34a; min-width: 2.2rem; padding-top: .1rem; }
+  .tp-list li b { display: block; font-size: .97rem; margin-bottom: .25rem; color: var(--forest-950); }
+  .tp-list li p { color: var(--muted); font-size: .88rem; }
+  .treat-donts { display: grid; grid-template-columns: 1.4fr 1fr; gap: 1.2rem; align-items: stretch; margin-bottom: 1.4rem; }
+  .dont { background: #fff; border: 1px solid var(--border); border-radius: 18px; padding: 1.6rem 1.7rem; box-shadow: var(--shadow-sm); }
+  .dont h3 { font-size: 1.02rem; font-weight: 600; margin-bottom: .3rem; color: var(--forest-950); }
+  .dont-sub { font-size: .82rem; color: var(--muted); margin-bottom: .9rem; }
+  .dont ul { list-style: none; display: flex; flex-direction: column; gap: .8rem; }
+  .dont li { display: flex; gap: .7rem; align-items: flex-start; font-size: .88rem; color: #4d574f; }
+  .dont li span { flex-shrink: 0; font-size: .95rem; padding-top: .1rem; }
+  .dont li p { margin: 0; }
+  .dont li b { color: #7f1d1d; }
   .dont.refs p { color: var(--muted); font-size: .88rem; margin-bottom: 1rem; }
+  .dont.refs .tp-fine { font-size: .8rem; color: #8a948c; font-style: italic; }
   .dont.refs .emerg-nums { justify-content: flex-start; gap: 1.4rem; }
   .dont.refs .emerg-nums span { font-size: 1.2rem; color: #b91c1c; }
+  .treat-disclaimer { font-size: .72rem; color: #8a948c; text-align: center; max-width: 52rem; margin: 0 auto; line-height: 1.6; }
   @media (max-width: 800px) {
     .treat-grid { grid-template-columns: 1fr; }
     .treat-donts { grid-template-columns: 1fr; }
+    .tp-head { flex-direction: column; align-items: flex-start; }
   }
 
   .cta { padding: 5rem 0; text-align: center; }
@@ -309,7 +321,7 @@ section[id] { scroll-margin-top: 76px; }
       <a href="#species">Local snakes</a>
       <a href="#habitat">Where they live</a>
       <a href="#safety">Stay safe</a>
-      <a href="#treatment">Bite first aid</a>
+<a href="#treatment">Bite protocol</a>
     </div>
     <a class="nav-cta" href="#cta">Learn more</a>
   </div>
@@ -527,63 +539,78 @@ section[id] { scroll-margin-top: 76px; }
 <section class="treatment" id="treatment">
   <div class="container">
     <div class="section-title">
-      <span class="section-eyebrow">Bite first aid</span>
-      <h2>If someone is bitten by a snake</h2>
-      <p>Act fast, stay calm and get to a hospital. Here is exactly what to do — and what to avoid.</p>
+      <span class="section-eyebrow">Snakebite protocol</span>
+      <h2>First aid for a snakebite</h2>
+      <p>Time matters. This protocol follows current WHO guidance on snakebite first aid for the Caribbean. It is a first-aid guide — treat it as the first step, never as a substitute for hospital care.</p>
     </div>
-    <div class="treat-grid">
-      <div class="treat-card">
-        <div class="treat-ico">1️⃣</div>
-        <h3>Move away from the snake</h3>
-        <p>Get the person out of striking range so no one else is bitten. Do not chase, capture or kill the snake.</p>
+
+    <div class="treat-protocol">
+      <div class="tp-head">
+        <span class="tp-badge">Protocol</span>
+        <div>
+          <h3>Immediate actions — in order</h3>
+          <p class="tp-sub">Carry out these steps before and during evacuation. The goal is to slow venom spread and get the patient to definitive care as quickly and safely as possible.</p>
+        </div>
       </div>
-      <div class="treat-card">
-        <div class="treat-ico">2️⃣</div>
-        <h3>Call for help</h3>
-        <p>Dial <strong>811</strong> (ambulance) or <strong>999</strong> immediately. Tell them a snake bite has happened and where you are.</p>
-      </div>
-      <div class="treat-card">
-        <div class="treat-ico">3️⃣</div>
-        <h3>Keep them calm and still</h3>
-        <p>Panic spreads venom faster. Have the person lie down and keep the bitten limb still and below heart level.</p>
-      </div>
-      <div class="treat-card">
-        <div class="treat-ico">4️⃣</div>
-        <h3>Remove tight items</h3>
-        <p>Take off rings, bracelets and tight clothing near the bite now — swelling will make them impossible to remove later.</p>
-      </div>
-      <div class="treat-card">
-        <div class="treat-ico">5️⃣</div>
-        <h3>Get to hospital fast</h3>
-        <p>The sooner antivenom is given, the better. If you can, call ahead so the emergency room is ready.</p>
-      </div>
-      <div class="treat-card">
-        <div class="treat-ico">6️⃣</div>
-        <h3>Note what the snake looked like</h3>
-        <p>Colour, size and pattern help doctors choose antivenom — but only if you can describe it safely from a distance. No photos needed.</p>
-      </div>
+      <ol class="tp-list">
+        <li>
+          <span class="tp-num">01</span>
+          <div><b>Move the patient out of striking range</b>
+          <p>Keep at least 5&nbsp;m from the snake. Do not attempt to capture, kill or identify it in person — an accurate verbal description from a safe distance is enough.</p></div>
+        </li>
+        <li>
+          <span class="tp-num">02</span>
+          <div><b>Activate emergency medical services</b>
+          <p>Call <strong>811</strong> (ambulance) or <strong>999</strong> (police/emergency) immediately. State that a snakebite occurred, give the location, and ask to be routed to the nearest facility holding antivenom.</p></div>
+        </li>
+        <li>
+          <span class="tp-num">03</span>
+          <div><b>Keep the patient calm and at rest</b>
+          <p>Reassure them; anxiety and movement raise heart rate and accelerate venom distribution. Have the patient lie supine with the bitten limb immobilised and positioned below heart level.</p></div>
+        </li>
+        <li>
+          <span class="tp-num">04</span>
+          <div><b>Remove constrictive items</b>
+          <p>Loosen or remove rings, bracelets, watches and tight clothing around the bite site before swelling makes them impossible to remove.</p></div>
+        </li>
+        <li>
+          <span class="tp-num">05</span>
+          <div><b>Improvise an immobilising splint</b>
+          <p>If evacuation is delayed, secure the limb with a firm splint to minimise movement. Do not elevate it, do not use tight bandaging above or below the bite.</p></div>
+        </li>
+        <li>
+          <span class="tp-num">06</span>
+          <div><b>Transfer to hospital without delay</b>
+          <p>Transport by ambulance whenever possible. If using a private vehicle, contact the receiving hospital en route so the emergency department and antivenom stock are prepared.</p></div>
+        </li>
+      </ol>
     </div>
+
     <div class="treat-donts">
       <div class="dont">
-        <h3>🚫 Don't do these</h3>
+        <h3>Contraindicated — do not do</h3>
+        <p class="dont-sub">These traditional measures are ineffective or harmful and delay definitive care.</p>
         <ul>
-          <li><span>✂️</span>Don't cut the wound or try to suck the venom out.</li>
-          <li><span>🩸</span>Don't apply a tight tourniquet — it traps venom in one limb.</li>
-          <li><span>🧊</span>Don't ice the bite or soak it in anything.</li>
-          <li><span>☕</span>Don't offer alcohol, caffeine or any "snakebite drink".</li>
-          <li><span>🔦</span>Don't use electric shock or snakebite gadgets — they don't work.</li>
+          <li><span>✂️</span><p><b>Incision or suction</b> — do not cut the wound, excise tissue, or attempt to suck out venom. Incision increases bleeding and infection risk.</p></li>
+          <li><span>🩸</span><p><b>Tight tourniquet</b> — arterial occlusion traps venom in the limb and can cause ischaemic injury and limb loss.</p></li>
+          <li><span>🧊</span><p><b>Icing or immersion</b> — cold does not neutralise venom and can cause tissue damage.</p></li>
+          <li><span>⚡</span><p><b>Electric shock or "snakebite gadgets"</b> — no evidence of benefit; they burn tissue and waste critical time.</p></li>
+          <li><span>☕</span><p><b>Alcohol, caffeine or stimulants</b> — they are not antidotes, mask clinical signs and worsen dehydration.</p></li>
         </ul>
       </div>
       <div class="dont refs">
-        <h3>🏥 Where antivenom is available</h3>
-        <p>Antivenom for Trinidad's snakes is held at <strong>Port of Spain General Hospital</strong>. Emergency dispatch can advise the nearest treatment centre.</p>
+        <h3>At hospital</h3>
+        <p>Antivenom for Trinidad's medically significant species is stocked at <strong>Port of Spain General Hospital</strong>. The decision to administer antivenom is made by medical staff based on clinical signs — not on whether the snake is seen.</p>
+        <p class="tp-fine">Bring the patient to hospital even for suspected "dry" or mild bites. Symptoms of envenoming can be delayed and require observation.</p>
         <div class="emerg-nums">
+          <span>811<small>Ambulance</small></span>
           <span>999<small>Police</small></span>
           <span>990<small>Fire</small></span>
-          <span>811<small>Ambulance</small></span>
         </div>
       </div>
     </div>
+
+    <p class="treat-disclaimer">© Serpentia TT · First-aid protocol summarised from WHO guidance on snakebite management (most recent edition) and national emergency practice. This information is provided for public education and does not constitute medical advice. Always consult a licensed healthcare professional in an emergency.</p>
   </div>
 </section>
 
@@ -1181,7 +1208,7 @@ function openModal(i) {
   const biteEl = document.getElementById('modalBite');
   const venomous = x.v;
   const mild = !!info.mild;
-  const treatSteps = '<div class="treat-steps"><div><b>1</b>Move away from the snake</div><div><b>2</b>Keep them calm and still</div><div><b>3</b>Remove rings, bracelets &amp; tight clothing</div><div><b>4</b>Get to a hospital immediately</div></div><p class="treat-link">Full bite first aid in the <a href="#treatment">Bite first aid</a> section.</p>';
+  const treatSteps = '<div class="treat-steps"><div><b>1</b>Move away — ensure scene safety</div><div><b>2</b>Keep patient calm &amp; immobilised</div><div><b>3</b>Remove rings, bracelets &amp; tight items</div><div><b>4</b>Evacuate to hospital immediately</div></div><p class="treat-link">Full first-aid protocol in the <a href="#treatment">Snakebite protocol</a> section.</p>';
   if (venomous) {
     biteEl.className = 'modal-bite watch';
     biteEl.innerHTML = '<h3><span>⚠️</span> If bitten — emergency</h3><p>' + escapeHtml(info.bite || 'Seek medical help immediately.') + '</p><p style="margin-top:.5rem;font-size:.82rem;">Emergency: <strong>999</strong> Police · <strong>811</strong> Ambulance · <strong>990</strong> Fire · Antivenom via <strong>Port of Spain General Hospital</strong>.</p>' + treatSteps;
@@ -1190,7 +1217,7 @@ function openModal(i) {
     biteEl.innerHTML = '<h3><span>⚠️</span> If bitten — stay calm</h3><p>' + escapeHtml(info.bite || 'Mildly venomous — usually no more than local pain and swelling. Clean the wound and see a doctor if symptoms develop.') + '</p><p style="margin-top:.5rem;font-size:.82rem;">If symptoms worsen, get to hospital: <strong>999</strong> Police · <strong>811</strong> Ambulance.</p>' + treatSteps;
   } else {
     biteEl.className = 'modal-bite harmless';
-    biteEl.innerHTML = '<h3><span>✓</span> If bitten</h3><p>' + escapeHtml(info.bite || 'Harmless. Wash the wound and keep it clean.') + '</p>' + '<p class="treat-link">See the <a href="#treatment">Bite first aid</a> section for full treatment steps.</p>';
+    biteEl.innerHTML = '<h3><span>✓</span> If bitten</h3><p>' + escapeHtml(info.bite || 'Harmless. Wash the wound and keep it clean.') + '</p>' + '<p class="treat-link">See the <a href="#treatment">Snakebite protocol</a> section for full first-aid steps.</p>';
   }
   modalEl.classList.add('open');
   document.body.style.overflow = 'hidden';
