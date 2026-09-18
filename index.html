@@ -227,9 +227,22 @@
   .cta p { color: var(--muted); margin-bottom: 1.9rem; }
 
 section[id] { scroll-margin-top: 76px; }
-  footer { border-top: 1px solid var(--border); padding: 2.2rem 0; background: var(--cream); }
-.foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: .85rem; color: var(--muted); }
-.foot-credit { margin-top: 1rem; font-size: .75rem; color: #98a29a; text-align: center; }
+footer { border-top: 1px solid var(--border); padding: 2.6rem 0 2rem; background: var(--cream); }
+  .foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 1.6rem; }
+  .foot-brand p { color: var(--muted); font-size: .85rem; margin-top: .7rem; max-width: 22rem; }
+  .foot-col { display: flex; flex-direction: column; gap: .45rem; }
+  .foot-col h4 { font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; color: #8a948c; margin-bottom: .35rem; }
+  .foot-col a, .foot-col span { font-size: .88rem; color: #4d574f; transition: color .2s; }
+  .foot-col a:hover { color: #16a34a; }
+  .foot-credit { margin-top: 1.6rem; padding-top: 1.2rem; border-top: 1px solid var(--border); font-size: .74rem; color: #98a29a; text-align: center; }
+  .foot-credit p { margin-bottom: .3rem; }
+  .foot-credit p:last-child { margin-bottom: 0; }
+  @media (max-width: 800px) {
+    .foot-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 480px) {
+    .foot-grid { grid-template-columns: 1fr; }
+  }
 
   /* Modal */
   .modal-overlay { position: fixed; inset: 0; background: rgba(7,20,11,.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 1.5rem; }
@@ -653,12 +666,37 @@ section[id] { scroll-margin-top: 76px; }
 </section>
 
 <footer>
-  <div class="container foot">
-    <div class="brand"><span class="brand-mark">🐍</span> Serpentia TT</div>
-    <span>© 2026 Serpentia TT. A celebration of local snakes.</span>
-  </div>
   <div class="container">
-    <div class="foot-credit">Photos: Wikimedia Commons &amp; iNaturalist contributors, used under CC0 / CC-BY / CC-BY-NC licences. Species checklist follows Boos (2001), Trinidad &amp; Tobago.</div>
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand"><span class="brand-mark">🐍</span> Serpentia TT</div>
+        <p>A celebration of the snakes of Trinidad &amp; Tobago — their names, habitats and the first-aid every islander should know.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <a href="#species">Local snakes</a>
+        <a href="#habitat">Where they live</a>
+        <a href="#safety">Stay safe</a>
+        <a href="#treatment">Bite protocol</a>
+      </div>
+      <div class="foot-col">
+        <h4>Useful links</h4>
+        <a href="https://ttfnc.org" target="_blank" rel="noopener">Field Naturalists' Club</a>
+        <a href="https://www.inaturalist.org/" target="_blank" rel="noopener">iNaturalist</a>
+        <a href="https://www.google.com/search?q=snakes+of+Trinidad+and+Tobago" target="_blank" rel="noopener">More on the islands' snakes</a>
+      </div>
+      <div class="foot-col">
+        <h4>Emergency</h4>
+        <span>811 — Ambulance</span>
+        <span>999 — Police</span>
+        <span>990 — Fire</span>
+        <span>Antivenom: P.O.S. General Hospital</span>
+      </div>
+    </div>
+    <div class="foot-credit">
+      <p>© 2026 Serpentia TT · A public-information site. First-aid guidance follows WHO snakebite-management recommendations; it is not a substitute for medical care.</p>
+      <p>Photos: Wikimedia Commons &amp; iNaturalist contributors, used under CC0 / CC-BY / CC-BY-NC licences. Species checklist follows Boos (2001), Trinidad &amp; Tobago.</p>
+    </div>
   </div>
 </footer>
 
