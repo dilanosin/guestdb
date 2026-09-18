@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GuestDB — Master Guest &amp; Relationship Management</title>
+<style>
+  :root {
+    --navy: #0f172a;
+    --navy-2: #1e293b;
+    --brand: #2563eb;
+    --brand-2: #3b82f6;
+    --ink: #0f172a;
+    --muted: #64748b;
+    --bg: #ffffff;
+    --soft: #f8fafc;
+    --border: #e2e8f0;
+    --good: #059669;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', 'Segoe UI', system-ui, Arial, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; }
+  a { color: var(--brand); text-decoration: none; }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* Nav */
+  nav { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.5rem; max-width: 1080px; margin: 0 auto; }
+  .brand { display: flex; align-items: center; gap: 0.6rem; font-weight: 800; font-size: 1.05rem; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 9px; background: linear-gradient(135deg, var(--brand-2), var(--brand)); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(37,99,235,0.35); }
+  .nav-links { display: flex; gap: 1.5rem; font-size: 0.9rem; font-weight: 600; color: var(--muted); }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cta { background: var(--brand); color: #fff; padding: 0.5rem 1.1rem; border-radius: 8px; font-size: 0.88rem; font-weight: 600; }
+  .nav-cta:hover { background: #1d4ed8; }
+
+  /* Hero */
+  .hero { padding: 5.5rem 0 4rem; background: radial-gradient(900px 400px at 80% -10%, rgba(37,99,235,0.10), transparent 60%), linear-gradient(180deg, #f8fafc, #ffffff); }
+  .hero .container { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 3rem; align-items: center; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: #eff6ff; color: var(--brand); border: 1px solid #dbeafe; border-radius: 999px; padding: 0.3rem 0.85rem; font-size: 0.78rem; font-weight: 700; margin-bottom: 1.25rem; }
+  .hero h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 1rem; }
+  .hero h1 span { color: var(--brand); }
+  .hero p { color: var(--muted); font-size: 1.05rem; max-width: 30rem; margin-bottom: 1.75rem; }
+  .hero-actions { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.45rem; padding: 0.8rem 1.5rem; border-radius: 10px; font-weight: 700; font-size: 0.95rem; }
+  .btn-primary { background: var(--brand); color: #fff; box-shadow: 0 6px 16px rgba(37,99,235,0.3); }
+  .btn-primary:hover { background: #1d4ed8; }
+  .btn-ghost { border: 1px solid var(--border); color: var(--ink); background: #fff; }
+  .btn-ghost:hover { border-color: var(--brand); color: var(--brand); }
+
+  /* Hero mock card */
+  .hero-mock { background: #fff; border: 1px solid var(--border); border-radius: 16px; box-shadow: 0 20px 50px rgba(15,23,42,0.10); padding: 1.5rem; }
+  .mock-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+  .mock-title { font-weight: 800; font-size: 0.95rem; }
+  .mock-legend { display: flex; gap: 0.9rem; font-size: 0.72rem; font-weight: 600; color: var(--muted); }
+  .dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; margin-right: 0.3rem; }
+  .dot-blue { background: var(--brand); }
+  .dot-green { background: var(--good); }
+  .dot-gray { background: #cbd5e1; }
+  .mock-bar { display: flex; align-items: flex-end; gap: 1.2rem; height: 190px; padding-top: 0.5rem; }
+  .mock-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+  .mock-groups { display: flex; align-items: flex-end; gap: 0.35rem; height: 170px; width: 100%; }
+  .mock-bar-seg { width: 100%; border-radius: 6px 6px 2px 2px; }
+  .mock-x { font-size: 0.78rem; font-weight: 700; color: var(--muted); }
+
+  /* Logos strip */
+  .logos { padding: 2rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: var(--soft); }
+  .logos p { text-align: center; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--faint) ; color: #94a3b8; margin-bottom: 1rem; }
+  .logo-row { display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; color: #94a3b8; font-weight: 800; font-size: 1rem; }
+  .logo-row span { opacity: 0.75; }
+
+  /* Features */
+  .features { padding: 5rem 0; }
+  .section-title { text-align: center; margin-bottom: 3rem; }
+  .section-title h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.6rem; }
+  .section-title p { color: var(--muted); max-width: 34rem; margin: 0 auto; }
+  .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .feat { background: #fff; border: 1px solid var(--border); border-radius: 14px; padding: 1.75rem; transition: box-shadow 0.2s, transform 0.2s; }
+  .feat:hover { box-shadow: 0 14px 34px rgba(15,23,42,0.08); transform: translateY(-3px); }
+  .feat-ico { width: 44px; height: 44px; border-radius: 11px; background: #eff6ff; color: var(--brand); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+  .feat h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .feat p { color: var(--muted); font-size: 0.9rem; }
+
+  /* How it works */
+  .how { padding: 5rem 0; background: var(--navy); color: #fff; }
+  .how .section-title h2 { color: #fff; }
+  .how .section-title p { color: #94a3b8; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .step { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.09); border-radius: 14px; padding: 1.75rem; }
+  .step-num { font-size: 0.8rem; font-weight: 800; color: var(--brand-2); letter-spacing: 0.06em; margin-bottom: 0.6rem; }
+  .step h3 { font-size: 1.05rem; margin-bottom: 0.4rem; }
+  .step p { color: #94a3b8; font-size: 0.9rem; }
+
+  /* CTA */
+  .cta { padding: 4.5rem 0; text-align: center; }
+  .cta h2 { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.7rem; }
+  .cta p { color: var(--muted); margin-bottom: 1.75rem; }
+
+  /* Footer */
+  footer { border-top: 1px solid var(--border); padding: 2rem 0; background: var(--soft); }
+  .foot { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 0.85rem; color: var(--muted); }
+  .foot .brand { font-size: 0.95rem; }
+
+  @media (max-width: 800px) {
+    .hero .container { grid-template-columns: 1fr; padding-top: 2rem; }
+    .hero h1 { font-size: 2rem; }
+    .feat-grid, .steps { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="brand"><span class="brand-mark">GD</span> GuestDB</div>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#cta">Contact</a>
+    </div>
+    <a class="nav-cta" href="#cta">Get started</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container">
+    <div>
+      <span class="hero-badge">● CRMs &amp; guest lists in one place</span>
+      <h1>Your guests. Your relationships. <span>Always in reach.</span></h1>
+      <p>GuestDB is a master database that keeps every contact, tier and validation in one elegant system — built for teams that care about who shows up.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#cta">Request access</a>
+        <a class="btn btn-ghost" href="#features">Explore features</a>
+      </div>
+    </div>
+    <div class="hero-mock">
+      <div class="mock-head">
+        <span class="mock-title">Dashboard preview</span>
+        <div class="mock-legend">
+          <span><i class="dot dot-blue"></i>Validated</span>
+          <span><i class="dot dot-gray"></i>Overdue</span>
+        </div>
+      </div>
+      <div class="mock-bar">
+        <div class="mock-col">
+          <div class="mock-groups">
+            <div class="mock-bar-seg" style="height:78%;background:var(--brand)"></div>
+            <div class="mock-bar-seg" style="height:22%;background:#cbd5e1"></div>
+          </div>
+          <span class="mock-x">Tier A</span>
+        </div>
+        <div class="mock-col">
+          <div class="mock-groups">
+            <div class="mock-bar-seg" style="height:100%;background:var(--good)"></div>
+          </div>
+          <span class="mock-x">Tier B</span>
+        </div>
+        <div class="mock-col">
+          <div class="mock-groups">
+            <div class="mock-bar-seg" style="height:88%;background:var(--good)"></div>
+          </div>
+          <span class="mock-x">Tier C</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="logos">
+  <div class="container">
+    <p>Trusted by relationship-focused teams</p>
+    <div class="logo-row">
+      <span>◆ HAWTHORNE</span>
+      <span>▲ VERITAS</span>
+      <span>● NORTHMARK</span>
+      <span>■ KESTREL</span>
+      <span>✦ AURENNE</span>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-title">
+      <h2>Everything you need to stay close</h2>
+      <p>From tier-based validation to event-ready guest lists, GuestDB handles the details so your team can focus on people.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="feat-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Master contact directory</h3>
+        <p>One source of truth for every guest, partner and contact — with ownership, position and company detail.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Tier-based validation</h3>
+        <p>Strategic tiers with rolling validation windows, overdue alerts and a live quality dashboard.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>Event guest lists</h3>
+        <p>Build and export clean rosters for any event in seconds — filter by tier, company or guest type.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </div>
+        <h3>Duplicate protection</h3>
+        <p>Automatic detection of repeated emails keeps your list clean and your outreach credible.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+        </div>
+        <h3>Owner accountability</h3>
+        <p>Every contact has an owner. Track completion and overdue metrics per relationship manager.</p>
+      </div>
+      <div class="feat">
+        <div class="feat-ico">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3>Excel &amp; CSV exports</h3>
+        <p>Stylish, ready-to-share spreadsheets for stakeholders — no copy-paste, no cleanup.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="container">
+    <div class="section-title">
+      <h2>How it works</h2>
+      <p>From first contact to event day — a simple rhythm your team will actually keep.</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">STEP 01</div>
+        <h3>Capture</h3>
+        <p>Log every guest and contact once, with tier and owner assigned from day one.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 02</div>
+        <h3>Validate</h3>
+        <p>Stay on top of rolling validation windows with overdue alerts and KPIs that keep you honest.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">STEP 03</div>
+        <h3>Invite &amp; export</h3>
+        <p>Build event rosters and share clean Excel exports with anyone who needs them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="cta">
+  <div class="container">
+    <h2>Ready to put your guest list to work?</h2>
+    <p>Get in touch to set your team up on GuestDB.</p>
+    <a class="btn btn-primary" href="mailto:hello@guestdb.local?subject=GuestDB%20access%20request">hello@guestdb.local</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container foot">
+    <div class="brand"><span class="brand-mark">GD</span> GuestDB</div>
+    <span>© 2026 GuestDB. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>
