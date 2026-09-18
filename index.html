@@ -10,17 +10,24 @@
 <meta name="google-site-verification" content="fnw_-_ZFz-4QOWWtNJi98ZrvtNsCb_cnveaaEx1qza0" />
 <meta name="author" content="Serpentia TT">
 <meta name="theme-color" content="#0c1a12">
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="favicon.svg">
 <link rel="canonical" href="https://dilanosin.github.io/guestdb/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://dilanosin.github.io/guestdb/">
 <meta property="og:title" content="Serpentia TT — The 46 Snakes of Trinidad &amp; Tobago">
 <meta property="og:description" content="Every snake recorded on the islands — photos, local names, habitats, plus the WHO-aligned snakebite first-aid protocol.">
 <meta property="og:image" content="https://dilanosin.github.io/guestdb/images/boa.jpg">
+<meta property="og:image:width" content="500">
+<meta property="og:image:height" content="500">
+<meta property="og:image:alt" content="Boa constrictor of Trinidad &amp; Tobago">
 <meta property="og:site_name" content="Serpentia TT">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Serpentia TT — The 46 Snakes of Trinidad &amp; Tobago">
 <meta name="twitter:description" content="Photos, local names, habitats and snakebite first aid for all of Trinidad & Tobago's snakes.">
 <meta name="twitter:image" content="https://dilanosin.github.io/guestdb/images/boa.jpg">
+<meta name="twitter:image:alt" content="Boa constrictor of Trinidad &amp; Tobago">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -65,6 +72,15 @@
   a { text-decoration: none; color: inherit; }
   button { font-family: inherit; }
   .container { max-width: 1160px; margin: 0 auto; padding: 0 1.5rem; }
+  .skip-link { position: absolute; left: -9999px; top: 0; z-index: 300; background: var(--forest-900); color: #fff; padding: .8rem 1.4rem; border-radius: 0 0 12px 0; font-size: .9rem; font-weight: 700; transition: none; }
+  .skip-link:focus { left: 0; }
+  :focus-visible { outline: 3px solid #16a34a; outline-offset: 2px; border-radius: 6px; }
+  @media print {
+    nav, footer, .modal-overlay, .finder, .esc-filter, .cta, .hero-snake { display: none !important; }
+    body { background: #fff; }
+    .spec { break-inside: avoid; page-break-inside: avoid; }
+    .spec .spec-click-hint { display: none; }
+  }
 
   nav { position: sticky; top: 0; z-index: 50; background: rgba(249,248,242,.82); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); border-bottom: 1px solid rgba(231,226,214,.8); }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: .8rem 1.5rem; max-width: 1160px; margin: 0 auto; gap: 1rem; }
@@ -81,6 +97,13 @@
   .nav-links a:hover::after { content:''; position:absolute; left:0; right:0; bottom:-4px; height:2px; border-radius:2px; background: var(--leaf); }
   .nav-cta { background: var(--forest-900); color: #fff; padding: .55rem 1.15rem; border-radius: 999px; font-size: .88rem; font-weight: 600; transition: transform .2s, background .2s, box-shadow .2s; box-shadow: var(--shadow-sm); }
   .nav-cta:hover { background: var(--leaf); transform: translateY(-1px); box-shadow: 0 8px 18px rgba(34,197,94,.35); }
+  .nav-burger { display: none; background: none; border: 1px solid var(--border); border-radius: 10px; width: 42px; height: 42px; align-items: center; justify-content: center; cursor: pointer; color: var(--forest-900); flex-shrink: 0; }
+  .nav-burger:hover { background: #f1efe7; }
+  .nav-burger .bar { display: block; width: 18px; height: 2px; background: currentColor; border-radius: 2px; transition: transform .25s ease, opacity .25s ease; }
+  .nav-burger .bar + .bar { margin-top: 4px; }
+  .nav-burger[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .nav-burger[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; }
+  .nav-burger[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
   .hero { position: relative; overflow: hidden; padding: 5.2rem 0 4.4rem; background: radial-gradient(1100px 500px at 88% -8%, rgba(34,197,94,.18), transparent 62%), radial-gradient(800px 500px at -10% 110%, rgba(217,161,59,.12), transparent 60%), linear-gradient(178deg, #f6f4ec, #fdfcf7 70%); }
   .hero::before { content:''; position:absolute; inset:0; background-image: radial-gradient(rgba(12,26,18,.05) 1px, transparent 1px); background-size: 22px 22px; pointer-events:none; }
@@ -285,7 +308,7 @@ footer { border-top: 1px solid var(--border); padding: 2.6rem 0 2rem; background
   .spec-clickable { cursor: pointer; }
   .spec-link { position: relative; }
   .spec-click-hint { position:absolute; top:10px; left:10px; z-index:2; background: rgba(7,20,11,.68); color:#fff; font-size:.66rem; font-weight:700; padding:.24rem .6rem; border-radius:999px; opacity:0; transition:opacity .2s; pointer-events:none; letter-spacing:.03em; backdrop-filter: blur(4px); }
-  .spec:hover .spec-click-hint { opacity:1; }
+  .spec:hover .spec-click-hint, .spec:focus-within .spec-click-hint, .spec:focus .spec-click-hint { opacity:1; }
   @media (max-width: 640px) {
     .detail-grid { grid-template-columns: 1fr; }
     .modal-body { padding: 1.35rem 1.35rem 1.6rem; }
@@ -335,7 +358,11 @@ footer { border-top: 1px solid var(--border); padding: 2.6rem 0 2rem; background
     .hero .container, .hab-full { grid-template-columns: 1fr; padding-top: 2rem; }
     .hero h1 { font-size: 2.3rem; }
     .facts-grid { grid-template-columns: 1fr 1fr; }
-    .nav-links { display: none; }
+    .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--sand); border-bottom: 1px solid var(--border); flex-direction: column; gap: 0; padding: .6rem 1.5rem 1rem; box-shadow: var(--shadow-md); }
+    .nav-links.open { display: flex; }
+    .nav-links a { padding: .7rem 0; border-bottom: 1px solid var(--border); }
+    .nav-links a:last-child { border-bottom: none; }
+    .nav-burger { display: inline-flex; }
     .hero-snake { width: 320px; }
     .nav-search { order: 3; flex: 1 1 100%; margin-top: .35rem; }
     .nav-inner { flex-wrap: wrap; }
@@ -353,6 +380,7 @@ footer { border-top: 1px solid var(--border); padding: 2.6rem 0 2rem; background
 </head>
 <body>
 
+<a class="skip-link" href="#species">Skip to the snake list</a>
 <nav>
   <div class="nav-inner">
     <div class="brand"><span class="brand-mark">🐍</span> Serpentia TT</div>
@@ -360,12 +388,15 @@ footer { border-top: 1px solid var(--border); padding: 2.6rem 0 2rem; background
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input id="navSearch" type="search" placeholder="Search snakes…" autocomplete="off" aria-label="Search snakes">
     </div>
-    <div class="nav-links">
+    <div class="nav-links" id="navLinks">
       <a href="#species">Local snakes</a>
       <a href="#habitat">Where they live</a>
       <a href="#safety">Stay safe</a>
 <a href="#treatment">Bite protocol</a>
     </div>
+    <button class="nav-burger" id="navBurger" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </button>
     <a class="nav-cta" href="#cta">Learn more</a>
   </div>
 </nav>
@@ -401,7 +432,7 @@ footer { border-top: 1px solid var(--border); padding: 2.6rem 0 2rem; background
           <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
         </div>
         <div>
-          <div class="stat-value">47</div>
+          <div class="stat-value">46</div>
           <div class="stat-label">Snake species recorded in T&amp;T</div>
         </div>
       </div>
@@ -442,7 +473,7 @@ footer { border-top: 1px solid var(--border); padding: 2.6rem 0 2rem; background
         <input id="searchInput" type="search" placeholder="Search a snake — name, local name or keywords…" autocomplete="off">
         <button id="searchClear" class="finder-clear" title="Clear" aria-label="Clear search">✕</button>
       </div>
-      <p class="finder-result" id="finderResult"></p>
+      <p class="finder-result" id="finderResult" aria-live="polite"></p>
       <details class="identify" id="identifyBox">
         <summary>🐾 Don't know the snake? Identify it by appearance <span class="identify-toggle">▼</span></summary>
         <div class="identify-grid">
@@ -487,7 +518,7 @@ footer { border-top: 1px solid var(--border); padding: 2.6rem 0 2rem; background
           <button class="btn btn-primary" id="idBtn">Show possible matches</button>
           <span class="identify-note">Answer a few — the tool scores all 46 species.</span>
         </div>
-        <div id="idResults" class="identify-results"></div>
+        <div id="idResults" class="identify-results" aria-live="polite"></div>
       </details>
     </div>
     <div class="spec-count">
@@ -501,7 +532,10 @@ footer { border-top: 1px solid var(--border); padding: 2.6rem 0 2rem; background
       <button class="esc-pill" data-is="trinidad">Trinidad</button>
       <button class="esc-pill" data-is="tobago">Tobago</button>
     </div>
-    <div id="gallery"></div>
+    <div id="gallery" aria-label="Snake species checklist"></div>
+    <noscript>
+      <div class="esc-empty">This checklist loads with JavaScript. Each card shows a photo, local name, family and where the snake lives — then opens a full species profile with snakebite first-aid advice. The full species list is also freely searchable on <a href="https://www.inaturalist.org/observations?taxon_id=26036" target="_blank" rel="noopener">iNaturalist</a>.</div>
+    </noscript>
   </div>
 </section>
 
@@ -700,13 +734,13 @@ footer { border-top: 1px solid var(--border); padding: 2.6rem 0 2rem; background
   </div>
 </footer>
 
-<div class="modal-overlay" id="modal" role="dialog" aria-modal="true">
+<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalName">
   <div class="modal" id="modalBox">
     <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
     <div class="modal-hero" id="modalHero"></div>
     <div class="modal-body">
       <div class="modal-title">
-        <h2 id="modalName"></h2>
+        <h2 id="modalName" tabindex="-1"></h2>
         <span class="modal-sci" id="modalSci"></span>
         <span class="modal-local" id="modalLocal"></span>
       </div>
@@ -1227,7 +1261,7 @@ if (hStats[1]) hStats[1].textContent = venomTotal;
 
 const badge = v => v ? '<span class="spec-badge badge-care">Venomous</span>' : '<span class="spec-badge badge-safe">Harmless</span>';
 const imgTag = (img, name, sci) => img
-  ? '<div class="spec-img"><img src="images/' + img + '" alt="' + name + ' (' + sci + ')" loading="lazy"></div>'
+  ? '<div class="spec-img"><img src="images/' + img + '" alt="' + name + ' (' + sci + ')" loading="lazy" decoding="async"></div>'
   : '<div class="spec-img"><div class="spec-nophoto">🐍</div></div>';
 const iso = x => x === 'both'
   ? '<i class="on">Trinidad</i><i class="on">Tobago</i>'
@@ -1241,7 +1275,7 @@ for (const fam of FAMILIES) {
   if (!items.length) continue;
   html += '<div class="family"><h3>' + fam.name + ' <span class="fam-tag">' + fam.tag + '</span></h3><p>' + fam.note + '</p><div class="spec-grid">';
   items.forEach(x => {
-    html += '<div class="spec spec-clickable" data-i="' + indexMap[x.s] + '">'
+    html += '<div class="spec spec-clickable" data-i="' + indexMap[x.s] + '" role="button" tabindex="0" aria-label="' + x.n + ' — ' + x.s + '. Click for details">'
       + '<span class="spec-click-hint">Click for details</span>'
       + imgTag(x.img, x.n, x.s)
       + '<div class="spec-body"><div class="spec-name"><h3>' + x.n + '</h3><span class="spec-local">' + x.l + '</span></div>'
@@ -1255,6 +1289,8 @@ document.getElementById('gallery').innerHTML = html;
 
 const modalEl = document.getElementById('modal');
 const modalBox = document.getElementById('modalBox');
+let lastFocused = null;
+const restoreFocus = () => { if (lastFocused && lastFocused.focus) lastFocused.focus(); };
 const escapeHtml = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 
 function openModal(i) {
@@ -1289,20 +1325,55 @@ function openModal(i) {
   }
   modalEl.classList.add('open');
   document.body.style.overflow = 'hidden';
+  lastFocused = document.activeElement;
+  document.getElementById('modalClose').focus();
 }
 
 function closeModal() {
   modalEl.classList.remove('open');
   document.body.style.overflow = '';
+  restoreFocus();
 }
 
 document.getElementById('gallery').addEventListener('click', e => {
   const card = e.target.closest('.spec-clickable');
   if (card) openModal(parseInt(card.getAttribute('data-i'), 10));
 });
+document.getElementById('gallery').addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const card = e.target.closest('.spec-clickable');
+  if (!card) return;
+  e.preventDefault();
+  openModal(parseInt(card.getAttribute('data-i'), 10));
+});
 document.getElementById('modalClose').addEventListener('click', closeModal);
 modalEl.addEventListener('click', e => { if (e.target === modalEl) closeModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && modalEl.classList.contains('open')) closeModal(); });
+
+// Keep focus inside the modal (focus trap) while it's open
+modalEl.addEventListener('keydown', e => {
+  if (e.key !== 'Tab' || !modalEl.classList.contains('open')) return;
+  const focusables = modalEl.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
+  if (!focusables.length) return;
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+  if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+
+// Mobile nav toggle
+const navBurger = document.getElementById('navBurger');
+const navLinks = document.getElementById('navLinks');
+navBurger.addEventListener('click', () => {
+  const open = navLinks.classList.toggle('open');
+  navBurger.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+navLinks.addEventListener('click', e => {
+  if (e.target.closest('a')) {
+    navLinks.classList.remove('open');
+    navBurger.setAttribute('aria-expanded', 'false');
+  }
+});
 
 // ---- Search + Identify ----
 const searchInput = document.getElementById('searchInput');
@@ -1414,7 +1485,7 @@ function identify() {
   list.forEach((s, i) => {
     const x = s.x;
     const idx = SNAKES.indexOf(x);
-    html += '<div class="ir-card" data-i="' + idx + '">'
+    html += '<div class="ir-card" data-i="' + idx + '" role="button" tabindex="0" aria-label="' + x.n + '. View details">'
       + '<h4>' + x.n + '</h4><div class="ir-sci">' + x.s + '</div>'
       + '<div class="ir-match"><b>' + (s.score >= 5 ? 'Strong match' : s.score >= 3 ? 'Likely match' : 'Possible match') + '</b> · ' + (s.why.join(', ')) + '</div>'
       + '</div>';
@@ -1423,7 +1494,11 @@ function identify() {
     html += '<div class="ir-none" style="text-align:left;font-size:.82rem;padding:.4rem 0;">Also worth checking: ' + maybe.map(m => m.x.n).join(', ') + '.</div>';
   }
   idResults.innerHTML = html;
-  idResults.querySelectorAll('.ir-card').forEach(card => card.addEventListener('click', () => openModal(parseInt(card.getAttribute('data-i'), 10))));
+  idResults.querySelectorAll('.ir-card').forEach(card => {
+    const clickIt = () => openModal(parseInt(card.getAttribute('data-i'), 10));
+    card.addEventListener('click', clickIt);
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); clickIt(); } });
+  });
 }
 idBtn.addEventListener('click', identify);
 ['idSize','idPatt','idSpot','idIsland'].forEach(id2 => document.getElementById(id2).addEventListener('change', identify));
