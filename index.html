@@ -38,6 +38,11 @@
 
   nav { position: sticky; top: 0; z-index: 50; background: rgba(249,248,242,.82); backdrop-filter: blur(14px) saturate(1.2); -webkit-backdrop-filter: blur(14px) saturate(1.2); border-bottom: 1px solid rgba(231,226,214,.8); }
   .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: .8rem 1.5rem; max-width: 1160px; margin: 0 auto; gap: 1rem; }
+  .nav-search { display: flex; align-items: center; gap: .45rem; background: #f1efe7; border: 1px solid var(--border); border-radius: 999px; padding: .34rem .5rem .34rem .8rem; transition: border-color .2s, box-shadow .2s, background .2s, flex .2s; flex: 0 0 220px; }
+  .nav-search:focus-within { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,.14); background: #fff; }
+  .nav-search svg { color: #98a29a; flex-shrink: 0; }
+  .nav-search input { flex: 1; border: none; outline: none; background: transparent; font-size: .88rem; padding: .2rem 0; color: var(--ink); font-family: inherit; width: 100%; min-width: 0; }
+  .nav-search input::-webkit-search-cancel-button { -webkit-appearance: none; }
   .brand { display: flex; align-items: center; gap: .6rem; font-weight: 800; font-size: 1.05rem; color: var(--forest-900); letter-spacing: -.01em; }
   .brand-mark { width: 34px; height: 34px; border-radius: 11px; background: linear-gradient(135deg, #14532d, #16a34a); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; box-shadow: var(--shadow-sm); }
   .nav-links { display: flex; gap: 1.6rem; font-size: .9rem; font-weight: 600; color: #5b655c; }
@@ -243,6 +248,8 @@ section[id] { scroll-margin-top: 76px; }
     .facts-grid { grid-template-columns: 1fr 1fr; }
     .nav-links { display: none; }
     .hero-snake { width: 320px; }
+    .nav-search { order: 3; flex: 1 1 100%; margin-top: .35rem; }
+    .nav-inner { flex-wrap: wrap; }
   }
   @media (max-width: 560px) {
     .facts-grid { grid-template-columns: 1fr; }
@@ -260,6 +267,10 @@ section[id] { scroll-margin-top: 76px; }
 <nav>
   <div class="nav-inner">
     <div class="brand"><span class="brand-mark">🐍</span> Serpentia TT</div>
+    <div class="nav-search">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="navSearch" type="search" placeholder="Search snakes…" autocomplete="off" aria-label="Search snakes">
+    </div>
     <div class="nav-links">
       <a href="#species">Local snakes</a>
       <a href="#habitat">Where they live</a>
@@ -1140,6 +1151,18 @@ function doSearch() {
 }
 searchInput.addEventListener('input', doSearch);
 searchClear.addEventListener('click', () => { searchInput.value = ''; doSearch(); searchInput.focus(); });
+
+// Nav search mirrors the finder bar
+const navSearch = document.getElementById('navSearch');
+navSearch.addEventListener('input', () => {
+  searchInput.value = navSearch.value;
+  doSearch();
+  if (navSearch.value) {
+    document.getElementById('species').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+searchInput.addEventListener('input', () => { navSearch.value = searchInput.value; });
+searchClear.addEventListener('click', () => { navSearch.value = ''; });
 
 // Identify tool
 const idSize = document.getElementById('idSize');
