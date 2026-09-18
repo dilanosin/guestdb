@@ -116,6 +116,12 @@
   .spec-count { display: flex; justify-content: center; gap: .75rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
   .spec-count span { background: linear-gradient(135deg, #f0fdf4, #e6f7ea); color: #166534; border: 1px solid #c7e6cd; border-radius: 999px; padding: .5rem 1.05rem; font-size: .84rem; font-weight: 700; box-shadow: var(--shadow-sm); }
 
+  .esc-filter { display: flex; justify-content: center; gap: .5rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
+  .esc-pill { border: 1px solid var(--border); background: var(--cream); color: var(--muted); font-size: .85rem; font-weight: 700; padding: .45rem 1.1rem; border-radius: 999px; cursor: pointer; transition: all .2s; font-family: inherit; }
+  .esc-pill:hover { border-color: #86c894; color: #166534; }
+  .esc-pill.active { background: linear-gradient(135deg, #15803d, #16a34a); color: #fff; border-color: transparent; box-shadow: 0 6px 16px rgba(22,163,74,.3); }
+  .esc-empty { text-align: center; color: var(--muted); padding: 2.5rem 0; font-size: .95rem; }
+
   .family { margin-bottom: 3rem; }
   .family h3 { font-size: 1.45rem; font-weight: 500; margin-bottom: .45rem; display: flex; align-items: center; gap: .55rem; color: var(--forest-950); }
   .family .fam-tag { font-size: .7rem; font-weight: 800; color: #166534; background: #dcfce7; border: 1px solid #c7e6cd; padding: .18rem .6rem; border-radius: 999px; letter-spacing: .04em; text-transform: uppercase; }
@@ -424,7 +430,7 @@ section[id] { scroll-margin-top: 76px; }
         </div>
         <div class="identify-actions">
           <button class="btn btn-primary" id="idBtn">Show possible matches</button>
-          <span class="identify-note">Answer a few — the tool scores all 47 species.</span>
+          <span class="identify-note">Answer a few — the tool scores all 46 species.</span>
         </div>
         <div id="idResults" class="identify-results"></div>
       </details>
@@ -433,6 +439,12 @@ section[id] { scroll-margin-top: 76px; }
       <span id="spTotal">…</span>
       <span id="spVenom">…</span>
       <span>Protected by the Conservation of Wildlife Act</span>
+    </div>
+    <div class="esc-filter" id="escFilter" role="group" aria-label="Filter by island">
+      <button class="esc-pill active" data-is="all">All islands</button>
+      <button class="esc-pill" data-is="both">Both islands</button>
+      <button class="esc-pill" data-is="trinidad">Trinidad</button>
+      <button class="esc-pill" data-is="tobago">Tobago</button>
     </div>
     <div id="gallery"></div>
   </div>
@@ -652,8 +664,7 @@ const SNAKES = [
   { f:'colubridae', n:'Mangrove snake', l:'Mapepire mangue', s:'Erythrolamprus cobella', img:'erythrolamprus_cobella.jpg', v:0, is:'trinidad', d:'Dark woodland snake found near mangroves and swamps.' },
   { f:'colubridae', n:'Doctor snake', l:'Beh belle chemin', s:'Erythrolamprus melanotus', img:'erythrolamprus_melanotus.jpg', v:0, is:'both', d:'Name means “walks on the road”; mainly a toad-eater.' },
   { f:'colubridae', n:'High woods coral', l:'—', s:'Erythrolamprus zweifeli', img:'erthryolamprus_zweifeli.jpg', v:0, is:'both', d:'A false-coral mimic of the deep forest.' },
-  { f:'colubridae', n:'Machete couesse', l:'Tobago racer', s:'Mastigodryas boddaerti boddaerti', img:'mastigodryas_boddaerti.jpg', v:0, is:'tobago', d:'Tobago’s fast day-hunter of forest edges.' },
-  { f:'colubridae', n:'Machete couesse', l:'Trinidad racer', s:'Mastigodryas boddaerti dunni', img:'mastigodryas_boddaerti.jpg', v:0, is:'trinidad', d:'A fast day-hunter of forest edges and gardens.' },
+  { f:'colubridae', n:'Machete couesse', l:'Tobago & Trinidad racer', s:'Mastigodryas boddaerti', img:'mastigodryas_boddaerti.jpg', v:0, is:'both', d:'A fast day-hunter of forest edges and gardens — Tobago’s racer and its Trinidad race are now counted as one on both islands.' },
   { f:'colubridae', n:'Red-nape snake', l:'Ring-neck snake', s:'Ninia atrata', img:'ninia_atrata.jpg', v:0, is:'both', d:'A small harmless snake with a striking reddish nape.' },
   { f:'colubridae', n:'Horsewhip', l:'Horsewhip', s:'Oxybelis aeneus', img:'oxybelis_aeneus.jpg', v:0, is:'both', d:'Paper-thin green vine snake that hunts by day.' },
   { f:'colubridae', n:'Calico snake', l:'False coral', s:'Oxyrhopus petola', img:'oxyrhopus_petola.jpg', v:0, is:'both', d:'Red, black and yellow-banded mimic with a mouse-catching diet.' },
@@ -882,21 +893,13 @@ const INFO = {
     more:'The high woods coral is a false-coral mimic of the deep forest, blending an unmistakable banded pattern with the shy habits of the true forest floor.',
     bite:'Harmless. Clean the wound as a precaution.'
   },
-  'Mastigodryas boddaerti boddaerti': {
-    h:'Tobago’s forest edges, secondary growth and gardens.', a:'Diurnal',
+  'Mastigodryas boddaerti': {
+    h:'Forest edges, secondary growth and gardens — across Trinidad and Tobago.', a:'Diurnal',
     z:'1–1.4 m',
     diet:'Lizards, frogs and small rodents',
     mild:0,
-    more:'Tobago’s own fast-moving racer darts through forest edges by day. The Tobago race (“boddaerti”) and the Trinidad race (“dunni”) are close cousins separated by the sea.',
+    more:'The machete couesse is a fast, sun-loving day hunter found at forest edges and around farms, where it keeps lizard and rodent numbers in check. The islands’ two races — “boddaerti” on Tobago and “dunni” on Trinidad — are close cousins separated by the sea, now treated together as one species found on both islands.',
     bite:'Harmless. It is quick to flee; any bite is a simple scratch to be washed and dressed.'
-  },
-  'Mastigodryas boddaerti dunni': {
-    h:'Trinidad’s forest edges, gardens and plantations.', a:'Diurnal',
-    z:'1–1.4 m',
-    diet:'Lizards, frogs and small rodents',
-    mild:0,
-    more:'The Trinidad racer is a fast, sun-loving day hunter found at forest edges and around farms, where it keeps lizard and rodent numbers in check.',
-    bite:'Harmless. Clean and dress any minor bite.'
   },
   'Ninia atrata': {
     h:'Humid forest floor — under logs, rocks and leaf litter.', a:'Secretive, active at night',
@@ -1093,8 +1096,7 @@ const ID = {
   'Erythrolamprus cobella':           { size:'small',  patt:'plain', spot:'water',  col:['dark','black','brown'], kw:'mangrove snake mapepire mangue swamp' },
   'Erythrolamprus melanotus':         { size:'small',  patt:'stripes', spot:'ground', col:['brown','yellow','olive'], kw:'doctor snake beh belle chemin road toad' },
   'Erythrolamprus zweifeli':          { size:'small',  patt:'bands', spot:'ground', col:['red','black','cream'], kw:'high woods coral mimic forest' },
-  'Mastigodryas boddaerti boddaerti': { size:'medium', patt:'plain', spot:'ground', col:['brown','olive'], kw:'tobago racer machete couesse day' },
-  'Mastigodryas boddaerti dunni':     { size:'medium', patt:'plain', spot:'ground', col:['brown','olive'], kw:'trinidad racer machete couesse day' },
+  'Mastigodryas boddaerti':            { size:'medium', patt:'plain', spot:'ground', col:['brown','olive'], kw:'machete couesse racer tobago trinidad day' },
   'Ninia atrata':                     { size:'tiny',   patt:'plain', spot:'digging', col:['dark','red-brown'], kw:'red-nape ring-neck leaf litter worm' },
   'Oxybelis aeneus':                  { size:'medium', patt:'plain', spot:'trees',  col:['green','brown','grey'], kw:'horsewhip vine thin whip branch day' },
   'Oxyrhopus petola':                 { size:'small',  patt:'bands', spot:'ground', col:['red','black','yellow'], kw:'calico false coral bands mouse' },
@@ -1224,6 +1226,11 @@ const scoreTerm = (text, term) => {
   return 0;
 };
 
+let islandFilter = 'all';
+const isleMatch = x => islandFilter === 'all' ? true
+  : islandFilter === 'both' ? (x.is === 'both')
+  : (x.is === islandFilter || x.is === 'both');
+
 function doSearch() {
   const q = searchInput.value.trim();
   searchClear.classList.toggle('show', !!q);
@@ -1231,8 +1238,8 @@ function doSearch() {
   SNAKES.forEach((x, i) => {
     const card = galleryEl.querySelector('.spec-clickable[data-i="' + i + '"]');
     if (!card) return;
-    let ok = true;
-    if (q) ok = q.toLowerCase().split(/\s+/).every(term => scoreTerm(haystack(x), term));
+    let ok = isleMatch(x);
+    if (q && ok) ok = q.toLowerCase().split(/\s+/).every(term => scoreTerm(haystack(x), term));
     card.style.display = ok ? '' : 'none';
     if (ok) shown++;
   });
@@ -1240,10 +1247,25 @@ function doSearch() {
     const vis = fam.querySelectorAll('.spec-clickable').length && [...fam.querySelectorAll('.spec-clickable')].some(c => c.style.display !== 'none');
     fam.style.display = vis ? '' : 'none';
   });
-  finderResult.textContent = q ? (shown + ' of ' + SNAKES.length + ' snake species match' + (shown ? ' — click any card for details.' : ' — try another word.')) : '';
+  if (q) {
+    finderResult.textContent = shown + ' of ' + SNAKES.length + ' snake species match' + (shown ? ' — click any card for details.' : ' — try another word.');
+  } else if (islandFilter !== 'all') {
+    finderResult.textContent = shown + ' species found on ' + (islandFilter === 'both' ? 'both islands' : islandFilter) + (shown ? ' — click any card for details.' : '.');
+  } else {
+    finderResult.textContent = '';
+  }
 }
 searchInput.addEventListener('input', doSearch);
 searchClear.addEventListener('click', () => { searchInput.value = ''; doSearch(); searchInput.focus(); });
+
+// Island filter pills
+document.getElementById('escFilter').addEventListener('click', e => {
+  const pill = e.target.closest('.esc-pill');
+  if (!pill) return;
+  document.querySelectorAll('.esc-pill').forEach(p => p.classList.toggle('active', p === pill));
+  islandFilter = pill.getAttribute('data-is');
+  doSearch();
+});
 
 // Nav search mirrors the finder bar
 const navSearch = document.getElementById('navSearch');
